@@ -11,36 +11,28 @@ const Login = () => {
     const { loginWithRedirect, isAuthenticated, isLoading } = useAuth0();
     const navigate = useNavigate();
 
-
     useEffect(() => {
         const wasUnauthorized = localStorage.getItem(UNAUTHORIZED_FLAG);
 
         if (wasUnauthorized === 'true') {
-
             toast.error('Privilegios insuficientes. Acceso denegado. Se requiere el rol ADMIN.', {
                 position: 'bottom-right',
                 duration: 5000,
             });
             
-
             localStorage.removeItem(UNAUTHORIZED_FLAG);
         }
     }, []);
 
-
     useEffect(() => {
         if (isAuthenticated && !isLoading) {
-
             navigate("/dashboard", { replace: true });
         }
     }, [isAuthenticated, isLoading, navigate]);
 
-
     const handleAuth0Login = () => {
-
         loginWithRedirect();
     };
-
 
     if (isLoading || isAuthenticated) {
         return (
@@ -52,10 +44,10 @@ const Login = () => {
 
     return (
         <div className="flex min-h-screen">
-            <div className="hidden lg:flex w-1/2 bg-gradient-to-br from-emerald-600 to-green-800 items-center justify-center p-12">
+            <div className="hidden lg:flex w-1/2 bg-gradient-to-br from-blue-600 to-blue-800 items-center justify-center p-12">
                 <div className="text-white">
-                    <h1 className="text-5xl font-bold mb-4">Sistema de gestión de inventario para librerías</h1>
-                    <p className="text-lg opacity-80">Control de productos, ventas, proveedores y alertas de stock bajo. Interfaz moderna, rápida y segura.</p>
+                    <h1 className="text-5xl font-bold mb-4">ValeERP</h1>
+                    <p className="text-lg opacity-80">Control de productos, ventas, proveedores y alertas de stock. Interfaz moderna, rápida y segura.</p>
                 </div>
             </div>
 
@@ -66,7 +58,7 @@ const Login = () => {
                         <p className="text-muted-foreground mb-6">Inicia sesión para acceder al panel</p>
 
                         <Button 
-                            className="w-full bg-emerald-600 hover:bg-emerald-700" 
+                            className="w-full bg-blue-600 hover:bg-blue-700" 
                             onClick={handleAuth0Login}
                         >
                             Iniciar sesión con Google/Auth0

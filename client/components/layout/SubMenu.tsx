@@ -30,7 +30,7 @@ export const SubMenu: React.FC<SubMenuProps> = ({ label, icon, children }) => {
         }
     }, [initiallyOpen]);
 
-    const activeStyle = "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300";
+    const activeStyle = "bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300";
     const baseStyle = "text-gray-700 hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-700";
 
     return (
@@ -72,8 +72,8 @@ export const SubMenu: React.FC<SubMenuProps> = ({ label, icon, children }) => {
                             to={item.to}
                             className={({ isActive }) =>
                                 `flex items-center gap-2 rounded-md px-3 py-2 transition-colors text-sm ${
-                                    isActive 
-                                        ? "text-emerald-600 dark:text-emerald-400 font-semibold" 
+                                    isActive
+                                        ? "text-blue-600 dark:text-blue-400 font-semibold"
                                         : "text-gray-600 hover:bg-gray-200 dark:text-gray-400 dark:hover:bg-gray-700"
                                 }`
                             }

@@ -109,7 +109,7 @@ const ProductList: React.FC = () => {
       setProductToDeleteName("");
     },
     onError: () => {
-      toast.error("Error al eliminar el producto. Verifica la consola.");
+      toast.error("No se pudo dar de baja el producto.");
     },
   });
 
@@ -206,9 +206,7 @@ const ProductList: React.FC = () => {
               </button>
             </div>
             <p className="text-gray-700 dark:text-gray-300">
-              ¿Estás seguro de que deseas eliminar el producto **
-              {productToDeleteName}** (ID: {productToDeleteId})? Esta acción es
-              irreversible.
+              ¿Confirmas la baja del producto {productToDeleteName} (ID: {productToDeleteId})? Deja de ofrecerse y el historial de stock se conserva.
             </p>
             <div className="flex justify-end space-x-3">
               <Button
@@ -229,7 +227,7 @@ const ProductList: React.FC = () => {
                   <Trash2 className="w-4 h-4 mr-2" />
                 )}
                 <span>
-                  {deleteMutation.isPending ? "Eliminando..." : "Eliminar"}
+                  {deleteMutation.isPending ? "Dando de baja..." : "Dar de baja"}
                 </span>
               </Button>
             </div>
@@ -410,7 +408,7 @@ const ProductList: React.FC = () => {
                         }
                         className="text-red-600 hover:bg-red-100 dark:text-red-400 dark:hover:bg-gray-700"
                         disabled={deleteMutation.isPending}
-                        title="Eliminar"
+                        title="Dar de baja"
                       >
                         <Trash2 className="w-4 h-4" />
                       </Button>

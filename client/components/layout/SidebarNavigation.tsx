@@ -119,7 +119,7 @@ export const SidebarNavigation: React.FC = () => {
 
 function NavItem({ to, label, icon: IconComponent }: { to: string, label: string, icon: any }) {
     return (
-        <NavLink to={to} className={({ isActive }) => `flex items-center gap-2 rounded-md px-3 py-2 transition-colors font-medium ${isActive ? "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300" : "text-gray-700 hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-700"}`} end>
+        <NavLink to={to} className={({ isActive }) => `flex items-center gap-2 rounded-md px-3 py-2 transition-colors font-medium ${isActive ? "bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300" : "text-gray-700 hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-700"}`} end>
             <IconComponent className="h-5 w-5" /> 
             <span>{label}</span>
         </NavLink>

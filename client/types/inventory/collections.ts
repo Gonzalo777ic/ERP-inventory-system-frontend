@@ -10,7 +10,7 @@ export interface Collection {
     amount: number;
     paymentMethod: PaymentMethodConfig;
     referenceNumber?: string;
-    status: 'ACTIVO' | 'ANULADO';
+    status: "PENDING" | "CONFIRMED" | "CANCELLED";
 }
 
 export interface CollectionPayload {

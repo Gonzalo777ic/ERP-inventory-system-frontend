@@ -323,7 +323,7 @@ const CollectionDetailPage: React.FC = () => {
                   </TableHeader>
                   <TableBody>
                     {ar.collections.map((col) => (
-                      <TableRow key={col.id} className={col.status === "ANULADO" ? "opacity-50" : ""}>
+                      <TableRow key={col.id} className={col.status === "CANCELLED" ? "opacity-50" : ""}>
                         <TableCell>#{col.id}</TableCell>
                         <TableCell>{new Date(col.collectionDate).toLocaleDateString()}</TableCell>
                         <TableCell className="text-xs font-mono">{col.referenceNumber || "-"}</TableCell>
@@ -331,7 +331,7 @@ const CollectionDetailPage: React.FC = () => {
                           + ${col.amount.toFixed(2)}
                         </TableCell>
                         <TableCell className="text-center">
-                          {col.status === "ANULADO" ? 
+                          {col.status === "CANCELLED" ? 
                             <Badge variant="outline" className="border-red-200 text-red-500">ANULADO</Badge> : 
                             <Badge variant="outline" className="border-green-200 text-green-600 bg-green-50">EXITOSO</Badge>
                           }

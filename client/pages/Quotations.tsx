@@ -18,6 +18,7 @@ import {
     changeQuotationStatus 
 } from "@/api/services/quotation"; 
 
+import { http } from "@/api/http";
 import { useAuth } from "@/hooks/useAuth";
 import { Quotation, QuotationPayload } from "@/types/index";
 import { QuotationFormSupplier } from "@/components/forms/QuotationFormSupplier";
@@ -30,7 +31,12 @@ const Quotations: React.FC = () => {
 
   const userRoles = (user as any)?.["https://nomosstore.com/roles"] || [];
   const isSupplier = userRoles.some((r: string) => r.includes("PROVEEDOR") || r.includes("SUPPLIER"));
-  const supplierId = (user as any)?.supplierId || 1; 
+  const { data: supplierLink } = useQuery({
+    queryKey: ["supplier-account-me"],
+    queryFn: async () => (await http.get<{ supplierId: number | null }>("/procurement/supplier-accounts/me")).data,
+    enabled: isSupplier,
+  });
+  const supplierId = supplierLink?.supplierId ?? null; 
 
 
   const [isCreateOpen, setIsCreateOpen] = useState(false);
@@ -41,10 +47,11 @@ const Quotations: React.FC = () => {
   const [confirmCancelId, setConfirmCancelId] = useState<number | null>(null);
 
 
-  const queryParams = isSupplier ? { supplierId } : undefined;
+  const queryParams = isSupplier && supplierId ? { supplierId } : undefined;
   const { data: quotations, isLoading } = useQuery({ 
       queryKey: ['quotations', queryParams], 
-      queryFn: () => getQuotations(queryParams) 
+      queryFn: () => getQuotations(queryParams),
+      enabled: !isSupplier || supplierId != null,
   });
 
 
@@ -146,8 +153,11 @@ const Quotations: React.FC = () => {
     <div className="p-8 space-y-6">
       <div className="flex justify-between items-center">
         <h1 className="text-3xl font-bold">Solicitudes de Presupuesto (Cotizaciones)</h1>
+        {isSupplier && supplierId == null && (
+          <p className="text-sm text-amber-700">Tu usuario no está vinculado a un proveedor. El vínculo se registra en abastecimiento.</p>
+        )}
         
-        {isSupplier && (
+        {isSupplier && supplierId != null && (
             <Dialog open={isCreateOpen} onOpenChange={setIsCreateOpen}>
                 <DialogTrigger asChild>
                     <Button className="bg-blue-600 hover:bg-blue-700">
@@ -223,7 +233,7 @@ const Quotations: React.FC = () => {
               </DialogHeader>
               {editingQuotation && (
                   <QuotationFormSupplier 
-                      supplierId={supplierId}
+                      supplierId={supplierId ?? editingQuotation.supplier.id}
                       initialData={editingQuotation} 
                       isLoading={updateMutation.isPending}
                       onSubmit={(data) => updateMutation.mutate(data)}

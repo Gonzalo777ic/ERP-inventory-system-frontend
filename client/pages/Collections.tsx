@@ -87,7 +87,7 @@ const Collections: React.FC = () => {
                 const colDate = new Date(col.collectionDate);
                 if (colDate.getMonth() === currentMonth && 
                     colDate.getFullYear() === currentYear && 
-                    col.status !== 'ANULADO') {
+                    col.status === "CONFIRMED") {
                     collectedThisMonth += col.amount;
                 }
             });

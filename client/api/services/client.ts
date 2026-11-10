@@ -1,7 +1,7 @@
-import { httpAuth } from '../httpAuth';
+import { httpStore } from '../httpStore';
 
 
-const CLIENT_API_BASE_URL = 'http://localhost:8080/api/auth/clients'; 
+const CLIENT_API_BASE_URL = 'http://localhost:8083/api/customers'; 
 
 export interface Client {
     id: number;
@@ -26,7 +26,7 @@ export const ClientService = {
      * GET /api/auth/clients
      */
     getAll: async (): Promise<Client[]> => {
-        const response = await httpAuth.get<Client[]>(CLIENT_API_BASE_URL);
+        const response = await httpStore.get<Client[]>(CLIENT_API_BASE_URL);
         return response.data;
     },
     
@@ -35,7 +35,7 @@ export const ClientService = {
      * GET /api/auth/clients/document-types
      */
     getDocumentTypes: async (): Promise<DocumentTypeRef[]> => {
-        const response = await httpAuth.get<DocumentTypeRef[]>(`${CLIENT_API_BASE_URL}/document-types`);
+        const response = await httpStore.get<DocumentTypeRef[]>(`${CLIENT_API_BASE_URL}/document-types`);
         return response.data;
     }
 };

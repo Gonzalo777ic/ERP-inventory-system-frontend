@@ -52,8 +52,8 @@ const SupplierUsersManager: React.FC<SupplierUsersManagerProps> = ({ isOpen, onC
     };
 
     const updateSyncMutation = useMutation({
-        mutationFn: ({ userId, sId }: { userId: number, sId: number | null }) => 
-            InternalUserService.updateSupplierAssignment(userId, sId),
+        mutationFn: ({ userId, username, sId }: { userId: number; username: string; sId: number | null }) =>
+            InternalUserService.updateSupplierAssignment(userId, username, sId),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['internal-users'] });
             toast.success('Acceso actualizado correctamente.');
@@ -79,7 +79,7 @@ const SupplierUsersManager: React.FC<SupplierUsersManagerProps> = ({ isOpen, onC
         if (user.supplierId) {
             setConfirmingUser(user);
         } else {
-            updateSyncMutation.mutate({ userId: user.id, sId: supplierId });
+            updateSyncMutation.mutate({ userId: user.id, username: user.username, sId: supplierId });
         }
     };
 
@@ -121,7 +121,7 @@ const SupplierUsersManager: React.FC<SupplierUsersManagerProps> = ({ isOpen, onC
                                                         variant="ghost" 
                                                         size="sm" 
                                                         className="text-red-500 hover:text-red-700"
-                                                        onClick={() => updateSyncMutation.mutate({ userId: user.id, sId: null })}
+                                                        onClick={() => updateSyncMutation.mutate({ userId: user.id, username: user.username, sId: null })}
                                                     >
                                                         <UserMinus className="w-4 h-4 mr-1" /> Quitar Acceso
                                                     </Button>
@@ -217,7 +217,7 @@ const SupplierUsersManager: React.FC<SupplierUsersManagerProps> = ({ isOpen, onC
                             className="bg-indigo-600 hover:bg-indigo-700"
                             onClick={() => {
                                 if (confirmingUser) {
-                                    updateSyncMutation.mutate({ userId: confirmingUser.id, sId: supplierId });
+                                    updateSyncMutation.mutate({ userId: confirmingUser.id, username: confirmingUser.username, sId: supplierId });
                                 }
                             }}
                         >

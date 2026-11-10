@@ -1,3 +1,4 @@
+import { http } from '../http';
 import { httpAuth } from '../httpAuth'; 
 
 const AUTH_API_BASE_URL = 'http://localhost:8080/api/auth/users'; 
@@ -20,17 +21,15 @@ export const InternalUserService = {
      */
     getAll: async (): Promise<InternalUser[]> => {
         const response = await httpAuth.get<InternalUser[]>(`${AUTH_API_BASE_URL}/internal`);
-        return response.data;
+        const links = await http.get<Array<{ userId: number; supplierId: number | null }>>("/procurement/supplier-accounts");
+        return response.data.map((user) => ({
+            ...user,
+            supplierId: links.data.find((link) => link.userId === user.id)?.supplierId ?? null,
+        }));
     },
 
-    /**
-     * Vincular o desvincular un usuario a un proveedor.
-     * PATCH /api/auth/users/{userId}/supplier?supplierId=X
-     */
-    updateSupplierAssignment: async (userId: number, supplierId: number | null): Promise<void> => {
-        await httpAuth.patch(`${AUTH_API_BASE_URL}/${userId}/supplier`, null, {
-            params: { supplierId }
-        });
+    updateSupplierAssignment: async (userId: number, username: string, supplierId: number | null): Promise<void> => {
+        await http.put("/procurement/supplier-accounts", { userId, username, supplierId });
     },
 
     /**
