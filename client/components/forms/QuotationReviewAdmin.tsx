@@ -56,7 +56,7 @@ export const QuotationReviewAdmin: React.FC = () => {
           
 
 
-          navigate('/purchases'); 
+          navigate('/purchases/orders');
       },
       onError: (err: any) => {
           toast({ title: "Error", description: "No se pudo convertir", variant: "destructive" });

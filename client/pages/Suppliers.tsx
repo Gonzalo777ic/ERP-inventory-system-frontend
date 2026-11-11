@@ -82,7 +82,7 @@ function SuppliersPage() {
     };
 
     const handleDelete = (id: number, name: string) => {
-        if (window.confirm(`¿Estás seguro de que quieres eliminar al proveedor "${name}"?`)) {
+        if (window.confirm(`¿Dar de baja al proveedor «${name}»? El histórico se conserva.`)) {
             deleteMutation.mutate(id);
         }
     };
@@ -197,14 +197,14 @@ function SuppliersPage() {
                                                     <Button
                                                         variant="ghost"
                                                         size="icon"
-                                                        title="Eliminar"
+                                                        title="Dar de baja"
                                                         onClick={() => handleDelete(supplier.id, supplier.name)}
                                                         disabled={deleteMutation.isPending && deleteMutation.variables === supplier.id}
                                                     >
                                                         {deleteMutation.isPending && deleteMutation.variables === supplier.id ? (
-                                                            <Loader2 className="h-4 w-4 animate-spin text-red-500" />
+                                                            <Loader2 className="h-4 w-4 animate-spin text-destructive" />
                                                         ) : (
-                                                            <Trash2 className="w-4 h-4 text-red-500" />
+                                                            <Trash2 className="w-4 h-4 text-destructive" />
                                                         )}
                                                     </Button>
                                                 </div>

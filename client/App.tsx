@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Navigate, Routes, Route } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Auth0Provider, useAuth0 } from "@auth0/auth0-react";
 import AuthAxiosProvider from "./components/AuthAxiosProvider";
@@ -11,15 +11,34 @@ import { useAuth } from "./hooks/useAuth";
 import Index from "./pages/Index";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
+import Apps from "./pages/Apps";
+import AppPlaceholder from "./pages/AppPlaceholder";
 import Products from "./pages/Products";
+import CatalogPage from "./pages/catalog/CatalogPage";
+import CatalogDetailPage from "./pages/catalog/CatalogDetailPage";
 import Inventory from "./pages/Inventory";
 import Sales from "./pages/Sales";
+import SalesAppPage from "./pages/sales/SalesAppPage";
+import SalesQuotationDetailPage from "./pages/sales/SalesQuotationDetailPage";
+import SalesOrderDetailPage from "./pages/sales/SalesOrderDetailPage";
+import CrmOpportunitiesPage from "./pages/crm/CrmOpportunitiesPage";
+import CrmOpportunityDetailPage from "./pages/crm/CrmOpportunityDetailPage";
 import Reports from "./pages/Reports";
+import SalesReportPage from "./pages/reports/SalesReportPage";
+import StockReportPage from "./pages/reports/StockReportPage";
+import ArReportPage from "./pages/reports/ArReportPage";
+import MrpHub from "./pages/mrp/MrpHub";
+import BomListPage from "./pages/mrp/BomListPage";
+import ManufacturingOrdersPage from "./pages/mrp/ManufacturingOrdersPage";
 import Alerts from "./pages/Alerts";
 import Suppliers from "./pages/Suppliers";
 import NotFound from "./pages/NotFound";
 import Layout from "./components/layout/Layout";
 import Purchases from "./pages/Purchases";
+import ComprasHub from "./pages/ComprasHub";
+import PurchaseOrdersPage from "./pages/purchases/PurchaseOrdersPage";
+import PurchaseReceiptPage from "./pages/purchases/PurchaseReceiptPage";
+import QuotationCompare from "./pages/QuotationCompare";
 import Quotations from "./pages/Quotations";
 import Promotions from "./pages/Promotions";
 import Collections from "./pages/Collections";
@@ -29,13 +48,17 @@ import Deliveries from "./pages/Deliveries";
 import RealtimeLocation from "./pages/RealtimeLocation";
 import Users from "./pages/Users";
 import Clients from "./pages/Clients";
+import Partners from "./pages/Partners";
 import Brands from "./pages/Brands";
 import Categories from "./pages/Categories";
 import UOM from "./pages/UOM";
 import Attributes from "./pages/Attributes";
 import Taxes from "./pages/Taxes";
 import Announcements from "./pages/Announcements";
-import AccountingMovements from "./pages/AccountingMovements";
+import ContabilidadHub from "./pages/accounting/ContabilidadHub";
+import JournalEntriesPage from "./pages/accounting/JournalEntriesPage";
+import InvoicesPage from "./pages/accounting/InvoicesPage";
+import ArApPage from "./pages/accounting/ArApPage";
 import Audit from "./pages/Audit";
 import StoreSchedule from "./pages/StoreSchedule";
 import Warehouses from "./pages/Warehouses";
@@ -49,9 +72,13 @@ import LegalEntities from "./pages/LegalEntities";
 import GlobalReturnsHistoryPage from "./pages/GlobalReturnsHistoryPage";
 import SaleReturnDetailPage from "./pages/SaleReturnDetailPage";
 import InventoryMovements from "./pages/InventoryMovements";
-import CashPage from "./pages/CashMovements";
+import CashPage from "./pages/cash/CashPage";
+import PosPage from "./pages/pos/PosPage";
 import ProductAttributesPage from "./pages/ProductAttributesPage";
 import BulkAttributeManagerPage from "./pages/BulkAttributeManagerPage";
+import StockDashboard from "./pages/StockDashboard";
+import StockPickings from "./pages/StockPickings";
+import StockAdjustments from "./pages/StockAdjustments";
 
 const queryClient = new QueryClient();
 
@@ -96,10 +123,27 @@ const AppContent = () => {
                 }
               >
                 <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/apps" element={<Apps />} />
+                <Route path="/apps/:appId" element={<AppPlaceholder />} />
+                <Route path="/catalog" element={<CatalogPage />} />
+                <Route path="/catalog/:id" element={<CatalogDetailPage />} />
                 <Route path="/products" element={<Products />} />
                 <Route path="/inventory/products/:id/attributes" element={<ProductAttributesPage />} />
                 <Route path="/inventory/products/bulk-attributes" element={<BulkAttributeManagerPage />} />
+                <Route path="/compras" element={<ComprasHub />} />
+                <Route path="/compras/ordenes" element={<PurchaseOrdersPage />} />
+                <Route path="/compras/recepciones" element={<PurchaseReceiptPage />} />
                 <Route path="/purchases" element={<Purchases />} />
+                <Route path="/purchases/orders" element={<PurchaseOrdersPage />} />
+                <Route
+                  path="/purchases/orders/:orderId/receive"
+                  element={<PurchaseReceiptPage />}
+                />
+                <Route path="/purchases/receipts" element={<PurchaseReceiptPage />} />
+                <Route
+                  path="/purchases/quotation-compare"
+                  element={<QuotationCompare />}
+                />
                 <Route path="/alerts" element={<Alerts />} />
                 <Route path="/store-schedule" element={<StoreSchedule />} />
                 <Route path="/shipping-guides" element={<ShippingGuides />} />
@@ -131,13 +175,24 @@ const AppContent = () => {
                     />
                   }
                 >
+                  <Route path="/stock" element={<StockDashboard />} />
                   <Route path="/inventory" element={<Inventory />} />
+                  <Route path="/inventory/pickings" element={<StockPickings />} />
+                  <Route path="/inventory/adjustments" element={<StockAdjustments />} />
+                  <Route path="/mrp" element={<MrpHub />} />
+                  <Route path="/mrp/boms" element={<BomListPage />} />
+                  <Route path="/mrp/orders" element={<ManufacturingOrdersPage />} />
                   <Route path="/warehouses" element={<Warehouses />} />
                   <Route path="/suppliers" element={<Suppliers />} />
-                  <Route path="/accounting-movements" element={<AccountingMovements />} />
+                  <Route path="/contabilidad" element={<ContabilidadHub />} />
+                  <Route path="/contabilidad/asientos" element={<JournalEntriesPage />} />
+                  <Route path="/contabilidad/facturas" element={<InvoicesPage />} />
+                  <Route path="/contabilidad/cxc-cxp" element={<ArApPage />} />
+                  <Route
+                    path="/accounting-movements"
+                    element={<Navigate to="/contabilidad/asientos" replace />}
+                  />
                   <Route path="/inventory-movements" element={<InventoryMovements />} />
-                  <Route path="/cash-movements" element={<CashPage />} />
-                  
                 </Route>
 
                 {}
@@ -148,8 +203,24 @@ const AppContent = () => {
                     />
                   }
                 >
-                  <Route path="/sales" element={<Sales />} />
-                  {}
+                  <Route path="/cash" element={<CashPage />} />
+                  <Route path="/cash-movements" element={<CashPage />} />
+                  <Route path="/pos" element={<PosPage />} />
+                  <Route path="/sales" element={<SalesAppPage />} />
+                  <Route
+                    path="/sales/quotations/:id"
+                    element={<SalesQuotationDetailPage />}
+                  />
+                  <Route
+                    path="/sales/orders/:id"
+                    element={<SalesOrderDetailPage />}
+                  />
+                  <Route path="/sales/registry" element={<Sales />} />
+                  <Route path="/crm" element={<CrmOpportunitiesPage />} />
+                  <Route
+                    path="/crm/opportunities/:id"
+                    element={<CrmOpportunityDetailPage />}
+                  />
                   <Route path="/promotions" element={<Promotions />} />
                   <Route path="/collections" element={<Collections />} />
                   <Route path="/collections/:id" element={<CollectionDetailPage />} />
@@ -165,6 +236,7 @@ const AppContent = () => {
                   element={<ProtectedRoute allowedRoles={["ROLE_ADMIN"]} />}
                 >
                   <Route path="/users" element={<Users />} />
+                  <Route path="/partners" element={<Partners />} />
                   <Route path="/clients" element={<Clients />} />
                   <Route path="/brands" element={<Brands />} />
                   <Route path="/categories" element={<Categories />} />
@@ -176,6 +248,9 @@ const AppContent = () => {
                   <Route path="/announcements" element={<Announcements />} />
                   <Route path="/audit" element={<Audit />} />
                   <Route path="/reports" element={<Reports />} />
+                  <Route path="/reports/sales" element={<SalesReportPage />} />
+                  <Route path="/reports/stock" element={<StockReportPage />} />
+                  <Route path="/reports/ar" element={<ArReportPage />} />
                 </Route>
 
                 <Route

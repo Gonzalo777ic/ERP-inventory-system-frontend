@@ -1,7 +1,14 @@
 import { Supplier } from "./masters";
 import { Product } from "./products";
 
-export type QuotationStatus = 'BORRADOR' | 'ENVIADO' | 'RESPONDIDO' | 'APROBADO' | 'CONVERTIDO' | 'RECHAZADO';
+export type QuotationStatus =
+  | "BORRADOR"
+  | "ENVIADO"
+  | "RESPONDIDO"
+  | "APROBADO"
+  | "CONVERTIDO"
+  | "RECHAZADO"
+  | "CANCELADO";
 
 export type QuotationDetail = {
     id: number;

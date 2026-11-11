@@ -1,4 +1,5 @@
-import { NavLink, Outlet, useNavigate } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
+import { LayoutGrid } from "lucide-react";
 import { useAuthStore } from "../../store/auth";
 import { ThemeToggle } from "./ThemeToggle";
 import { SidebarNavigation } from "./SidebarNavigation";
@@ -29,30 +30,16 @@ export default function Layout() {
 
 function Brand() {
   return (
-    <div className="flex items-center gap-3 text-lg font-semibold text-gray-900 dark:text-white">
-      <span className="inline-flex h-9 w-9 items-center justify-center rounded-lg bg-blue-600 text-white shadow-sm">
+    <Link
+      to="/apps"
+      className="flex items-center gap-3 text-lg font-semibold text-foreground transition-colors duration-150 hover:text-primary"
+      aria-label="Ir a Aplicaciones"
+    >
+      <span className="inline-flex h-9 w-9 items-center justify-center rounded-lg bg-primary text-primary-foreground shadow-sm">
         V
       </span>
       <span className="tracking-tight">ValeERP</span>
-    </div>
-  );
-}
-
-function NavItem({ to, label }: { to: string; label: string }) {
-  return (
-    <NavLink
-      to={to}
-      className={({ isActive }) =>
-        `flex items-center gap-2 rounded-md px-3 py-2 transition-colors ${
-            isActive 
-                ? "bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300 font-medium" 
-                : "text-gray-700 hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-700"
-        }`
-      }
-      end
-    >
-      <span>{label}</span>
-    </NavLink>
+    </Link>
   );
 }
 
@@ -69,6 +56,14 @@ function Header() {
         </div>
         
         <div className="flex items-center gap-3 ml-auto">
+          <Link
+            to="/apps"
+            className="inline-flex items-center gap-2 rounded-md border border-border bg-card px-3 py-1.5 text-sm font-medium text-foreground transition-colors duration-150 hover:bg-muted"
+            aria-label="Abrir Aplicaciones"
+          >
+            <LayoutGrid className="h-5 w-5 text-primary" />
+            <span className="hidden md:inline">Apps</span>
+          </Link>
           <ThemeToggle />
           <div className="hidden sm:flex items-center gap-3 pl-3 border-l dark:border-gray-700">
             <div className="flex flex-col items-end">

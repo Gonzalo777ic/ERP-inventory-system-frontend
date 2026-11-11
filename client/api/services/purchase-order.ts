@@ -1,44 +1,44 @@
-import { http } from '@/api/http'; 
-import { 
-    PurchaseOrder, 
-    PurchaseOrderPayload, 
-    OrderStatus
-} from '../../types/index';
+import { ProcurementService } from "./procurement";
+import type {
+  OrderStatus,
+  PurchaseOrder,
+  PurchaseOrderPayload,
+} from "../../types/index";
 
-const BASE_URL = '/v1/purchase-orders';
+/** Thin adapters over ProcurementService for form / page imports. */
 
-export const getPurchaseOrders = async (params?: { filterSupplierId?: number }): Promise<PurchaseOrder[]> => {
+export const getPurchaseOrders = async (params?: {
+  filterSupplierId?: number;
+}): Promise<PurchaseOrder[]> =>
+  ProcurementService.listOrders(params?.filterSupplierId);
 
-    const queryString = params?.filterSupplierId 
-        ? `?filterSupplierId=${params.filterSupplierId}` 
-        : '';
+export const getPurchaseOrderById = async (
+  id: number,
+): Promise<PurchaseOrder> => ProcurementService.getOrder(id);
 
-    const { data } = await http.get(`${BASE_URL}${queryString}`);
-    return data;
-};
+export const createPurchaseOrder = async (
+  payload: PurchaseOrderPayload,
+): Promise<PurchaseOrder> => ProcurementService.createOrder(payload);
 
-export const getPurchaseOrderById = async (id: number): Promise<PurchaseOrder> => {
-    const { data } = await http.get(`${BASE_URL}/${id}`);
-    return data;
-};
+export const updatePurchaseOrder = async (
+  id: number,
+  payload: PurchaseOrderPayload,
+): Promise<PurchaseOrder> => ProcurementService.updateOrder(id, payload);
 
-export const createPurchaseOrder = async (payload: PurchaseOrderPayload): Promise<PurchaseOrder> => {
-    const { data } = await http.post(BASE_URL, payload); 
-    return data;
-};
+export const updateOrderStatus = async (
+  id: number,
+  status: OrderStatus,
+): Promise<PurchaseOrder> =>
+  ProcurementService.updateOrderStatus(id, status);
 
-export const updatePurchaseOrder = async (id: number, payload: PurchaseOrderPayload): Promise<PurchaseOrder> => {
-    const { data } = await http.put(`${BASE_URL}/${id}`, payload);
-    return data;
-};
+/** Anula la orden (libro); no borra filas. */
+export const cancelPurchaseOrder = async (
+  id: number,
+): Promise<PurchaseOrder> => ProcurementService.cancelOrder(id);
 
+export const receivePurchaseOrder = async (
+  id: number,
+): Promise<PurchaseOrder> => ProcurementService.receiveOrder(id);
 
-export const updateOrderStatus = async (id: number, status: OrderStatus): Promise<PurchaseOrder> => {
-
-    const { data } = await http.patch(`${BASE_URL}/${id}/status`, { status });
-    return data;
-};
-
-export const deletePurchaseOrder = async (id: number): Promise<void> => {
-    await http.delete(`${BASE_URL}/${id}`);
-};
+/** @deprecated Prefer cancelPurchaseOrder — anula el documento, no elimina. */
+export const deletePurchaseOrder = cancelPurchaseOrder;

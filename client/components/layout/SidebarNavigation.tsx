@@ -6,7 +6,8 @@ import {
     Home, Package, DollarSign, Truck, Settings, BarChart3, ShoppingCart, 
     Archive, Users, ClipboardList, Tag, CreditCard, RefreshCw, Map, 
     PackageOpen, Scale, Ruler, Percent, Megaphone, Clock, AlertTriangle, 
-    Briefcase, Warehouse, Wallet, ClipboardCheck, FileSignature, Activity
+    Briefcase, Warehouse, Wallet, ClipboardCheck, FileSignature, Activity,
+    LayoutGrid, Contact, GitCompareArrows, FileText, PackageCheck, Factory
 } from 'lucide-react'; 
 
 const ROLE_CLAIM_KEY = "https://nomosstore.com/roles";
@@ -20,27 +21,49 @@ export const SidebarNavigation: React.FC = () => {
 
     return (
         <nav className="mt-6 space-y-2 text-sm">
+            <NavItem to="/apps" label="Aplicaciones" icon={LayoutGrid} />
             <NavItem to="/dashboard" label="Dashboard" icon={Home} />
             
             {}
             <SubMenu label="Inventario" icon={<Package className="h-5 w-5" />}>
                 {[
-                    { to: "/products", label: "Catálogo de Productos", icon: <ShoppingCart className="h-4 w-4" /> },
-                    { to: "/purchases", label: isSupplier ? "Mis Pedidos" : "Órdenes de Abastecimiento", icon: <ClipboardList className="h-4 w-4" /> },
+                    { to: "/catalog", label: "Catálogo", icon: <ShoppingCart className="h-4 w-4" /> },
+                    { to: "/products", label: "Productos (legado)", icon: <ShoppingCart className="h-4 w-4" /> },
                     ...(!isSupplier ? [
+                        { to: "/stock", label: "Tablero de stock", icon: <Archive className="h-4 w-4" /> },
+                        { to: "/inventory/pickings", label: "Pickings", icon: <PackageOpen className="h-4 w-4" /> },
+                        { to: "/inventory/adjustments", label: "Ajustes / conteos", icon: <ClipboardCheck className="h-4 w-4" /> },
                         { to: "/inventory", label: "Inventario Físico (Lotes)", icon: <Archive className="h-4 w-4" /> },
-                        { to: "/warehouses", label: "Almacenes y Ubicaciones", icon: <Warehouse className="h-4 w-4" /> }, 
-                        { to: "/suppliers", label: "Proveedores", icon: <Users className="h-4 w-4" /> },
+                        { to: "/mrp", label: "MRP / Manufactura", icon: <Factory className="h-4 w-4" /> },
+                        { to: "/warehouses", label: "Almacenes y Ubicaciones", icon: <Warehouse className="h-4 w-4" /> },
                     ] : [])
+                ]}
+            </SubMenu>
+
+            <SubMenu label="Compras" icon={<ClipboardList className="h-5 w-5" />}>
+                {[
+                    { to: "/compras", label: "Flujo RFQ→OC→Recepción", icon: <ShoppingCart className="h-4 w-4" /> },
+                    { to: "/quotations", label: isSupplier ? "Mis cotizaciones" : "RFQ / Cotizaciones", icon: <FileText className="h-4 w-4" /> },
+                    ...(!isSupplier ? [
+                        { to: "/purchases/quotation-compare", label: "Comparativo RFQ", icon: <GitCompareArrows className="h-4 w-4" /> },
+                    ] : []),
+                    { to: "/purchases/orders", label: isSupplier ? "Mis pedidos" : "Órdenes de compra", icon: <ClipboardList className="h-4 w-4" /> },
+                    ...(!isSupplier ? [
+                        { to: "/purchases/receipts", label: "Recepciones", icon: <PackageCheck className="h-4 w-4" /> },
+                        { to: "/suppliers", label: "Proveedores", icon: <Users className="h-4 w-4" /> },
+                    ] : []),
                 ]}
             </SubMenu>
 
             {}
             <SubMenu label="Ventas & Caja" icon={<DollarSign className="h-5 w-5" />}>
                 {[
-                    { to: "/quotations", label: "Cotizaciones", icon: <Tag className="h-4 w-4" /> },
                     ...(!isSupplier ? [
-                        { to: "/sales", label: "Registro de Ventas", icon: <ClipboardList className="h-4 w-4" /> },
+                        { to: "/sales", label: "Ventas (cotiz. / pedidos)", icon: <ClipboardList className="h-4 w-4" /> },
+                        { to: "/pos", label: "POS", icon: <LayoutGrid className="h-4 w-4" /> },
+                        { to: "/cash", label: "Caja / Sesiones", icon: <Wallet className="h-4 w-4" /> },
+                        { to: "/crm", label: "CRM Oportunidades", icon: <Briefcase className="h-4 w-4" /> },
+                        { to: "/sales/registry", label: "Registro fiscal", icon: <ClipboardList className="h-4 w-4" /> },
                         { to: "/promotions", label: "Promociones y Ofertas", icon: <Tag className="h-4 w-4" /> },
                         { to: "/collections", label: "Gestión de Cobranzas", icon: <CreditCard className="h-4 w-4" /> },
                         { to: "/credit-documents", label: "Títulos Valores (Legal)", icon: <FileSignature className="h-4 w-4" /> },
@@ -51,22 +74,44 @@ export const SidebarNavigation: React.FC = () => {
 
             {}
             {!isSupplier && (
+                <SubMenu label="Contabilidad" icon={<Scale className="h-5 w-5" />}>
+                    {[
+                        {
+                            to: "/contabilidad",
+                            label: "Resumen",
+                            icon: <Scale className="h-4 w-4" />,
+                        },
+                        {
+                            to: "/contabilidad/asientos",
+                            label: "Asientos",
+                            icon: <ClipboardCheck className="h-4 w-4" />,
+                        },
+                        {
+                            to: "/contabilidad/facturas",
+                            label: "Facturas",
+                            icon: <FileSignature className="h-4 w-4" />,
+                        },
+                        {
+                            to: "/contabilidad/cxc-cxp",
+                            label: "CxC / CxP",
+                            icon: <CreditCard className="h-4 w-4" />,
+                        },
+                    ]}
+                </SubMenu>
+            )}
+
+            {!isSupplier && (
                 <SubMenu label="Movimientos" icon={<Activity className="h-5 w-5" />}>
                     {[
-                        { 
-                            to: "/accounting-movements", 
-                            label: "Mov. Contables (Balance)", 
-                            icon: <Scale className="h-4 w-4" /> 
+                        {
+                            to: "/inventory-movements",
+                            label: "Mov. de Inventario",
+                            icon: <Package className="h-4 w-4" />,
                         },
-                        { 
-                            to: "/inventory-movements", 
-                            label: "Mov. de Inventario", 
-                            icon: <Package className="h-4 w-4" /> 
-                        },
-                        { 
-                            to: "/cash-movements", 
-                            label: "Mov. de Caja / Pagos", 
-                            icon: <Wallet className="h-4 w-4" />
+                        {
+                            to: "/cash",
+                            label: "Caja / Arqueo",
+                            icon: <Wallet className="h-4 w-4" />,
                         },
                     ]}
                 </SubMenu>
@@ -89,6 +134,7 @@ export const SidebarNavigation: React.FC = () => {
                     {[
                         { to: "/legal-entities", label: "Entidades Legales (Empresas)", icon: <Briefcase className="h-4 w-4" /> },
                         { to: "/users", label: "Usuarios y Roles", icon: <Users className="h-4 w-4" /> },
+                        { to: "/partners", label: "Partners / Contactos", icon: <Contact className="h-4 w-4" /> },
                         { to: "/clients", label: "Clientes", icon: <Users className="h-4 w-4" /> },
                         { to: "/brands", label: "Marcas (Fabricantes)", icon: <Briefcase className="h-4 w-4" /> },
                         { to: "/categories", label: "Clasificación (Categorías)", icon: <Tag className="h-4 w-4" /> },
@@ -107,7 +153,7 @@ export const SidebarNavigation: React.FC = () => {
                     { to: "/alerts", label: "Alertas de Stock", icon: <AlertTriangle className="h-4 w-4" /> },
                     { to: "/store-schedule", label: "Horarios de Atención", icon: <Clock className="h-4 w-4" /> },
                     ...(!isSupplier ? [
-                        { to: "/reports", label: "Generador de Reportes", icon: <BarChart3 className="h-4 w-4" /> },
+                        { to: "/reports", label: "Centro de Reportes", icon: <BarChart3 className="h-4 w-4" /> },
 
                         { to: "/audit", label: "Registro de Auditoría", icon: <ClipboardCheck className="h-4 w-4" /> },
                     ] : [])

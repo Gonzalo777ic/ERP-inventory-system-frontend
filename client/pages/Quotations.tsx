@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { Plus, Eye, FileText, Edit, Send, XCircle, AlertTriangle, Trash2 } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { Plus, Eye, FileText, Edit, Send, XCircle, AlertTriangle, Trash2, GitCompareArrows } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 
 import { Button } from "@/components/ui/button";
@@ -22,6 +22,7 @@ import { http } from "@/api/http";
 import { useAuth } from "@/hooks/useAuth";
 import { Quotation, QuotationPayload } from "@/types/index";
 import { QuotationFormSupplier } from "@/components/forms/QuotationFormSupplier";
+import { ComprasSubNav } from "@/components/compras/ComprasSubNav";
 
 const Quotations: React.FC = () => {
   const { user } = useAuth();
@@ -151,31 +152,42 @@ const Quotations: React.FC = () => {
 
   return (
     <div className="p-8 space-y-6">
-      <div className="flex justify-between items-center">
+      <ComprasSubNav />
+      <div className="flex justify-between items-center gap-4">
         <h1 className="text-3xl font-bold">Solicitudes de Presupuesto (Cotizaciones)</h1>
-        {isSupplier && supplierId == null && (
-          <p className="text-sm text-amber-700">Tu usuario no está vinculado a un proveedor. El vínculo se registra en abastecimiento.</p>
-        )}
-        
-        {isSupplier && supplierId != null && (
-            <Dialog open={isCreateOpen} onOpenChange={setIsCreateOpen}>
-                <DialogTrigger asChild>
-                    <Button className="bg-blue-600 hover:bg-blue-700">
-                        <Plus className="mr-2 h-4 w-4"/> Crear Nueva Oferta
-                    </Button>
-                </DialogTrigger>
-                <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
-                    <DialogHeader>
-                        <DialogTitle>Nueva Cotización / Oferta</DialogTitle>
-                    </DialogHeader>
-                    <QuotationFormSupplier 
-                        supplierId={supplierId} 
-                        isLoading={createMutation.isPending}
-                        onSubmit={(data) => createMutation.mutate(data)} 
-                    />
-                </DialogContent>
-            </Dialog>
-        )}
+        <div className="flex items-center gap-4">
+          {!isSupplier && (
+            <Button variant="outline" asChild>
+              <Link to="/purchases/quotation-compare">
+                <GitCompareArrows className="mr-2 h-4 w-4" />
+                Comparativo RFQ
+              </Link>
+            </Button>
+          )}
+          {isSupplier && supplierId == null && (
+            <p className="text-sm text-muted-foreground">Tu usuario no está vinculado a un proveedor. El vínculo se registra en abastecimiento.</p>
+          )}
+          
+          {isSupplier && supplierId != null && (
+              <Dialog open={isCreateOpen} onOpenChange={setIsCreateOpen}>
+                  <DialogTrigger asChild>
+                      <Button className="shadow-md">
+                          <Plus className="mr-2 h-4 w-4"/> Crear Nueva Oferta
+                      </Button>
+                  </DialogTrigger>
+                  <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+                      <DialogHeader>
+                          <DialogTitle>Nueva Cotización / Oferta</DialogTitle>
+                      </DialogHeader>
+                      <QuotationFormSupplier 
+                          supplierId={supplierId} 
+                          isLoading={createMutation.isPending}
+                          onSubmit={(data) => createMutation.mutate(data)} 
+                      />
+                  </DialogContent>
+              </Dialog>
+          )}
+        </div>
       </div>
 
       <Card>

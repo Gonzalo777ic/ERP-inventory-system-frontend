@@ -3,7 +3,7 @@ import { useForm, useFieldArray } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { Loader2, PlusCircle, Trash2, Calendar, ShoppingCart, EyeOff, Lock } from "lucide-react";
+import { Loader2, PlusCircle, Trash2, Calendar, ShoppingCart, Lock, XCircle } from "lucide-react";
 
 import { 
     PurchaseOrder, 
@@ -15,7 +15,7 @@ import {
 import { 
     createPurchaseOrder, 
     updatePurchaseOrder,
-    deletePurchaseOrder
+    cancelPurchaseOrder,
 } from '@/api/services/purchase-order';
 import { getSuppliers } from '@/api/services/supplier'; 
 import { getProducts } from '@/api/services/products'; 
@@ -27,6 +27,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { 
     Form, FormControl, FormField, FormItem, FormLabel, FormMessage 
 } from '@/components/ui/form'; 
+
 
 
 const detailSchema = z.object({
@@ -178,26 +179,27 @@ const PurchaseOrderForm: React.FC<PurchaseOrderFormProps> = ({
       }
   });
 
-  const deleteMutation = useMutation({
-      mutationFn: (id: number) => deletePurchaseOrder(id),
+  const cancelMutation = useMutation({
+      mutationFn: (id: number) => cancelPurchaseOrder(id),
       onSuccess: () => {
-          toast({ title: "Eliminado", description: "La orden ha sido eliminada.", variant: "default" });
-          queryClient.invalidateQueries({ queryKey: ['purchase-orders'] }); 
+          toast({ title: "Anulada", description: "La orden quedó anulada; el histórico se conserva.", variant: "default" });
+          queryClient.invalidateQueries({ queryKey: ['purchase-orders'] });
+          queryClient.invalidateQueries({ queryKey: ['procurement-pipeline'] });
           onSuccess();
       },
-      onError: (error: any) => {
-          toast({ title: "Error", description: "No se pudo eliminar la orden.", variant: "destructive" });
+      onError: () => {
+          toast({ title: "Error", description: "No se pudo anular la orden.", variant: "destructive" });
       }
   });
 
-  const isSubmitting = createMutation.isPending || updateMutation.isPending || deleteMutation.isPending;
+  const isSubmitting = createMutation.isPending || updateMutation.isPending || cancelMutation.isPending;
 
-  const handleDelete = useCallback(() => {
+  const handleCancel = useCallback(() => {
       if (!orderId) return;
-      if (window.confirm(`¿Eliminar definitivamente la orden OC-${orderId}?`)) {
-          deleteMutation.mutate(orderId);
+      if (window.confirm(`¿Anular la orden OC-${orderId}? El documento permanece en el libro.`)) {
+          cancelMutation.mutate(orderId);
       }
-  }, [orderId, deleteMutation]);
+  }, [orderId, cancelMutation]);
 
   const onSubmit = (values: PurchaseOrderFormValues) => {
       if (isEditing && isStatusNonEditable) {
@@ -489,13 +491,13 @@ const PurchaseOrderForm: React.FC<PurchaseOrderFormProps> = ({
                 {canMutate && ( 
                     <Button 
                         type="button" 
-                        onClick={handleDelete} 
+                        onClick={handleCancel} 
                         variant="outline"
-                        className="border-red-200 text-red-600 hover:bg-red-50 hover:text-red-700"
+                        className="text-destructive hover:bg-destructive/10"
                         disabled={isSubmitting}
                     >
-                        {deleteMutation.isPending ? <Loader2 className="w-4 h-4 animate-spin" /> : <Trash2 className="w-4 h-4 mr-2" />}
-                        Eliminar Orden
+                        {cancelMutation.isPending ? <Loader2 className="w-4 h-4 animate-spin" /> : <XCircle className="w-4 h-4 mr-2" />}
+                        Anular orden
                     </Button>
                 )}
 
