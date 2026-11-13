@@ -11,7 +11,7 @@ const money = (amount: number) => ({ amount, currency: CATALOG_CURRENCY });
  * Shapes match CatalogProductDetailDto (list derives from these).
  */
 export const CATALOG_BRAND_OPTIONS: readonly CatalogFilterOption[] = [
-  { id: 1, name: "Nomos Basic" },
+  { id: 1, name: "ValeERP" },
   { id: 2, name: "Andes Wear" },
   { id: 3, name: "Servicios Vale" },
 ] as const;
@@ -138,7 +138,7 @@ export const CATALOG_SEED: CatalogProductDetailDto[] = [
     name: "Bolsa de empaque",
     productType: "CONSUMABLE",
     brandId: 1,
-    brandName: "Nomos Basic",
+    brandName: "ValeERP",
     categoryId: 12,
     categoryName: "Insumos",
     unitOfMeasureId: 2,
@@ -178,7 +178,7 @@ export const CATALOG_SEED: CatalogProductDetailDto[] = [
     name: "Polo técnico",
     productType: "STORABLE",
     brandId: 1,
-    brandName: "Nomos Basic",
+    brandName: "ValeERP",
     categoryId: 10,
     categoryName: "Ropa",
     unitOfMeasureId: 1,
@@ -226,7 +226,7 @@ export const CATALOG_SEED: CatalogProductDetailDto[] = [
     name: "Etiquetas barcode",
     productType: "CONSUMABLE",
     brandId: 1,
-    brandName: "Nomos Basic",
+    brandName: "ValeERP",
     categoryId: 12,
     categoryName: "Insumos",
     unitOfMeasureId: 4,

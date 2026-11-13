@@ -37,7 +37,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
   auth0LogoutFn: null,
 
   syncAuth: (isAuthenticated, user) => {
-    const supplierId = user?.["https://nomosstore.com/supplier_id"] || null;
+    const supplierId = user?.["https://valeerp.local/supplier_id"] || null;
 
     set({
       isAuthenticated,

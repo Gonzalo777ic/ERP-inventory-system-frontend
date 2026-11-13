@@ -10,7 +10,7 @@ import {
     LayoutGrid, Contact, GitCompareArrows, FileText, PackageCheck, Factory
 } from 'lucide-react'; 
 
-const ROLE_CLAIM_KEY = "https://nomosstore.com/roles";
+const ROLE_CLAIM_KEY = "https://valeerp.local/roles";
 
 export const SidebarNavigation: React.FC = () => {
     const user = useAuthStore(s => s.user);

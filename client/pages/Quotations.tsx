@@ -30,7 +30,7 @@ const Quotations: React.FC = () => {
   const queryClient = useQueryClient();
 
 
-  const userRoles = (user as any)?.["https://nomosstore.com/roles"] || [];
+  const userRoles = (user as any)?.["https://valeerp.local/roles"] || [];
   const isSupplier = userRoles.some((r: string) => r.includes("PROVEEDOR") || r.includes("SUPPLIER"));
   const { data: supplierLink } = useQuery({
     queryKey: ["supplier-account-me"],

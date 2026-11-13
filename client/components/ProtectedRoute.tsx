@@ -7,7 +7,7 @@ interface ProtectedRouteProps {
   allowedRoles?: string[];
 }
 
-const ROLE_CLAIM_KEY = "https://nomosstore.com/roles";
+const ROLE_CLAIM_KEY = "https://valeerp.local/roles";
 
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children, allowedRoles }) => {
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);

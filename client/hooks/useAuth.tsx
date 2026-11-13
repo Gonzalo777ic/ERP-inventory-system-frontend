@@ -35,12 +35,12 @@ export const useAuth = () => {
     try {
       const token = await getAccessTokenSilently({
         authorizationParams: {
-          audience: "https://nomos.inventory.api",
+          audience: "https://valeerp.inventory.api",
           scope: "openid profile email",
         },
       });
       const claims = await getIdTokenClaims();
-      const roleClaim = "https://nomosstore.com/roles";
+      const roleClaim = "https://valeerp.local/roles";
       const roles: string[] = claims && claims[roleClaim] ? (claims[roleClaim] as string[]) : [];
 
       console.log("--- [AUTH] Token JWT de Auth0 Obtenido ---");

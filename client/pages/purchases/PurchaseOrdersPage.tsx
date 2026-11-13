@@ -47,7 +47,7 @@ import { formatProcurementMoney } from "@/types/inventory/procurement";
 import { OrderStatusBadge } from "./purchaseLabels";
 
 const ORDERS_QUERY = ["purchase-orders"] as const;
-const ROLE_CLAIM = "https://nomosstore.com/roles";
+const ROLE_CLAIM = "https://valeerp.local/roles";
 const LIST_STALE_MS = 60_000;
 
 const PurchaseOrdersPage: React.FC = () => {

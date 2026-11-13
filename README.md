@@ -1,6 +1,6 @@
-NOMOS INVENTORY SYSTEM FRONTEND
+ValeERP
 
-Este es el repositorio del frontend para el Sistema de Inventario Nomos, construido con React, TypeScript, Vite, y estilizado con Tailwind CSS. Utilizamos pnpm como gestor de paquetes.
+Frontend del ERP, construido con React, TypeScript, Vite y Tailwind CSS. El gestor de paquetes es pnpm.
 
 INICIO RÁPIDO
 
@@ -20,7 +20,7 @@ INSTALACIÓN DE DEPENDENCIAS
 Navega hasta el directorio raíz del proyecto e instala todas las dependencias:
 
 Navega al directorio del proyecto (si aún no estás ahí)
-cd nomos-inventory-system-frontend
+cd valeerp-erp
 
 Instala todas las dependencias usando pnpm
 pnpm install
