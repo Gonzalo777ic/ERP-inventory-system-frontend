@@ -26,7 +26,7 @@ const Taxes: React.FC = () => {
     } catch (e) {
       console.error("Error fetching tax rates:", e);
 
-      setError("No tienes permiso o el servicio no está disponible (puerto 8083)."); 
+      setError("No tienes permiso o el servicio de impuestos no está disponible."); 
       toast({
         title: "Error de Carga",
         description: "Error al cargar las tasas. Verifica la conexión o tus permisos.",
@@ -37,19 +37,19 @@ const Taxes: React.FC = () => {
     }
   };
 
-  const handleDelete = async (id: number, name: string) => {
+  const handleRetire = async (id: number, name: string) => {
     try {
-      await TaxRateService.delete(id);
+      await TaxRateService.retire(id);
       toast({
-        title: "Eliminada",
-        description: `La tasa '${name}' ha sido eliminada.`,
+        title: "Dada de baja",
+        description: `La tasa '${name}' ha sido dada de baja. El histórico se conserva.`,
       });
       fetchRates();
     } catch (e) {
-      console.error("Error deleting tax rate:", e);
+      console.error("Error retiring tax rate:", e);
       toast({
-        title: "Error de Eliminación",
-        description: "No se pudo eliminar la tasa de impuesto. ¿Tiene el rol de Administrador?",
+        title: "Error al dar de baja",
+        description: "No se pudo dar de baja la tasa de impuesto. ¿Tiene el rol de Administrador?",
         variant: "destructive",
       });
     }
@@ -119,17 +119,17 @@ const Taxes: React.FC = () => {
                           </AlertDialogTrigger>
                           <AlertDialogContent>
                             <AlertDialogHeader>
-                              <AlertDialogTitle>¿Eliminar Tasa {rate.name}?</AlertDialogTitle>
+                              <AlertDialogTitle>¿Dar de baja la tasa {rate.name}?</AlertDialogTitle>
                               <AlertDialogDescription>
-                                Esta acción eliminará permanentemente la tasa de impuesto **{rate.name}** del sistema.
+                                La tasa {rate.name} dejará de estar vigente. El histórico se conserva.
                               </AlertDialogDescription>
                             </AlertDialogHeader>
                             <AlertDialogFooter>
                               <AlertDialogCancel>Cancelar</AlertDialogCancel>
                               <AlertDialogAction 
-                                onClick={() => handleDelete(rate.id!, rate.name)}
-                                className="bg-red-600 hover:bg-red-700">
-                                Eliminar
+                                onClick={() => handleRetire(rate.id!, rate.name)}
+                                className="bg-destructive text-destructive-foreground hover:bg-destructive/90">
+                                Dar de baja
                               </AlertDialogAction>
                             </AlertDialogFooter>
                           </AlertDialogContent>

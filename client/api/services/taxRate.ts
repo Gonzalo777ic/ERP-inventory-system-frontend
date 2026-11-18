@@ -31,12 +31,11 @@ export const TaxRateService = {
   
   update: async (id: number, data: TaxRatePayload): Promise<TaxRate> => {
 
-    const response = await httpStore.put<TaxRate>(`${taxRatesUrl()}/${id}`, data);
+    const response = await httpStore.put<TaxRate>(taxRatesUrl(`/${id}`), data);
     return response.data;
   },
-  
-  delete: async (id: number): Promise<void> => {
 
-    await httpStore.delete(`${taxRatesUrl()}/${id}`);
+  retire: async (id: number): Promise<void> => {
+    await httpStore.post(taxRatesUrl(`/${id}/retire`));
   }
 };
