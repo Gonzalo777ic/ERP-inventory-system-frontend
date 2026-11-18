@@ -44,6 +44,8 @@ import Quotations from "./pages/Quotations";
 import Promotions from "./pages/Promotions";
 import Collections from "./pages/Collections";
 import Returns from "./pages/Returns";
+import ComplaintsPage from "./pages/complaints/ComplaintsPage";
+import ComplaintDetailPage from "./pages/complaints/ComplaintDetailPage";
 import ShippingGuides from "./pages/ShippingGuides";
 import Deliveries from "./pages/Deliveries";
 import CarriersPage from "./pages/dispatch/CarriersPage";
@@ -227,6 +229,17 @@ const AppContent = () => {
                   <Route path="/returns" element={<Returns />} />
                   <Route path="/returns/history" element={<GlobalReturnsHistoryPage />} />
                   <Route path="/returns/:id" element={<SaleReturnDetailPage />} />
+                </Route>
+
+                <Route
+                  element={
+                    <ProtectedRoute
+                      allowedRoles={["ROLE_ADMIN", "ROLE_SELLER", "ROLE_VENDOR"]}
+                    />
+                  }
+                >
+                  <Route path="/complaints" element={<ComplaintsPage />} />
+                  <Route path="/complaints/:id" element={<ComplaintDetailPage />} />
                 </Route>
 
                 {}
