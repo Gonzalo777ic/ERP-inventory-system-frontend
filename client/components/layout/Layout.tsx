@@ -35,10 +35,11 @@ function Brand() {
       className="flex items-center gap-3 text-lg font-semibold text-foreground transition-colors duration-150 hover:text-primary"
       aria-label="Ir a Aplicaciones"
     >
-      <span className="inline-flex h-9 w-9 items-center justify-center rounded-lg bg-primary text-primary-foreground shadow-sm">
-        V
-      </span>
-      <span className="tracking-tight">ValeERP</span>
+      <img
+        src="/valeerp-wordmark.png"
+        alt="ValeERP"
+        className="h-10 w-auto rounded-md bg-white px-1.5 py-1"
+      />
     </Link>
   );
 }

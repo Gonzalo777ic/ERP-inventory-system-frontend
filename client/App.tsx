@@ -6,6 +6,7 @@ import AuthAxiosProvider from "./components/AuthAxiosProvider";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { Toaster } from "react-hot-toast";
 
+import { BrandLoader } from "./components/BrandLoader";
 import { useAuth } from "./hooks/useAuth";
 
 import Index from "./pages/Index";
@@ -82,13 +83,7 @@ import StockAdjustments from "./pages/StockAdjustments";
 
 const queryClient = new QueryClient();
 
-const LoadingScreen = () => (
-  <div className="flex items-center justify-center min-h-screen bg-gray-50 dark:bg-gray-900">
-    <div className="text-xl font-medium text-primary dark:text-primary animate-pulse">
-      Iniciando sesión...
-    </div>
-  </div>
-);
+const LoadingScreen = () => <BrandLoader label="Iniciando sesión..." />;
 
 const AuthSync = ({ children }: { children: React.ReactNode }) => {
   useAuth();

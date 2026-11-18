@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
+import { BrandLoader } from "../components/BrandLoader";
 import { Button } from "../components/ui/button";
 import { Card, CardContent } from "../components/ui/card";
 import { useNavigate } from 'react-router-dom';
@@ -36,9 +37,7 @@ const Login = () => {
 
     if (isLoading || isAuthenticated) {
         return (
-            <div className="flex min-h-screen items-center justify-center">
-                Cargando autenticación...
-            </div>
+            <BrandLoader label="Cargando autenticación..." />
         ); 
     }
 
