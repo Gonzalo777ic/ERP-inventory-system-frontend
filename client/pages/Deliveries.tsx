@@ -26,7 +26,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import type { DispatchGuideQuery } from "@/types/dispatch";
+import type { DispatchGuide, DispatchGuideQuery } from "@/types/dispatch";
 import { DeliveryAssignDialog } from "./dispatch/DeliveryAssignDialog";
 import {
   ASSIGNMENT_BADGE,
@@ -43,7 +43,7 @@ export default function Deliveries() {
   const [search, setSearch] = useState("");
   const [assignment, setAssignment] = useState(ALL_ASSIGNMENTS);
   const [page, setPage] = useState(0);
-  const [selectedId, setSelectedId] = useState<number | null>(null);
+  const [selected, setSelected] = useState<DispatchGuide | null>(null);
 
   const listQuery: DispatchGuideQuery = {
     assignable: true,
@@ -63,7 +63,6 @@ export default function Deliveries() {
   });
 
   const guides = guidesQuery.data?.content ?? [];
-  const selected = guides.find((guide) => guide.id === selectedId) ?? null;
   const totalPages = guidesQuery.data?.totalPages ?? 0;
 
   const assignDelivery = useMutation({
@@ -71,7 +70,7 @@ export default function Deliveries() {
       DispatchGuideService.assignDelivery(id, payload),
     onSuccess: () => {
       toast.success("Delivery asignado.");
-      setSelectedId(null);
+      setSelected(null);
       queryClient.invalidateQueries({ queryKey: dispatchQueryKeys.all });
     },
     onError: (error) => toast.error(dispatchErrorMessage(error, "No se pudo asignar el delivery.")),
@@ -86,7 +85,7 @@ export default function Deliveries() {
             <h1 className="text-3xl font-bold">Asignación de delivery</h1>
           </div>
           <p className="text-sm text-muted-foreground">
-            Guías ya emitidas. Registre el nombre o la referencia de quien entrega.
+            Guías ya emitidas. Elija un transportista vigente para la entrega.
           </p>
         </div>
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
@@ -173,7 +172,7 @@ export default function Deliveries() {
                   </TableCell>
                   <TableCell className="text-right">
                     {guide.canAssignDelivery ? (
-                      <Button variant="outline" size="sm" onClick={() => setSelectedId(guide.id)}>
+                      <Button variant="outline" size="sm" onClick={() => setSelected(guide)}>
                         <Truck className="h-4 w-4" />
                         Asignar
                       </Button>
@@ -203,7 +202,7 @@ export default function Deliveries() {
       <DeliveryAssignDialog
         guide={selected}
         pending={assignDelivery.isPending}
-        onClose={() => setSelectedId(null)}
+        onClose={() => setSelected(null)}
         onAssign={(guideId, payload) => assignDelivery.mutate({ id: guideId, payload })}
       />
     </div>

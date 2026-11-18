@@ -28,9 +28,13 @@ export type DispatchGuide = {
   voidReason: string | null;
   assignmentStatus: string;
   assignmentStatusLabel: string;
-  assigneeName: string | null;
-  assigneeReference: string | null;
+  carrierId: number | null;
+  carrierName: string | null;
+  carrierCode: string | null;
   medium: string | null;
+  deliveryScope: string | null;
+  deliveryScopeLabel: string | null;
+  assignmentRef: string | null;
   assignedAt: string | null;
   canIssue: boolean;
   canAssignDelivery: boolean;
@@ -71,8 +75,8 @@ export type CreateDispatchGuidePayload = {
 };
 
 export type AssignDeliveryPayload = {
-  assigneeName: string | null;
-  assigneeReference: string | null;
+  carrierId: number;
+  scope: string | null;
   medium: string | null;
 };
 

@@ -33,10 +33,10 @@ export function referenceLabel(guide: Pick<DispatchGuide, "saleId" | "saleOrderI
   return parts.length === 0 ? "Sin referencia" : parts.join(" · ");
 }
 
-export function assigneeLabel(guide: Pick<DispatchGuide, "assignmentStatus" | "assignmentStatusLabel" | "assigneeName" | "assigneeReference">): string {
+export function assigneeLabel(guide: Pick<DispatchGuide, "assignmentStatus" | "assignmentStatusLabel" | "carrierName" | "carrierCode">): string {
   if (guide.assignmentStatus !== "ASSIGNED") {
     return guide.assignmentStatusLabel;
   }
-  const who = [guide.assigneeName, guide.assigneeReference].filter((part) => part && part.trim()).join(" · ");
+  const who = [guide.carrierName, guide.carrierCode].filter((part) => part && part.trim()).join(" · ");
   return who || guide.assignmentStatusLabel;
 }

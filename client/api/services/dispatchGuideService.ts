@@ -20,6 +20,7 @@ export const dispatchQueryKeys = {
   reasons: () => [...dispatchQueryKeys.all, "reasons"] as const,
   statuses: () => [...dispatchQueryKeys.all, "statuses"] as const,
   assignmentStatuses: () => [...dispatchQueryKeys.all, "assignment-statuses"] as const,
+  scopes: () => [...dispatchQueryKeys.all, "scopes"] as const,
 };
 
 const guidesUrl = (suffix = "") => `${storeApiBase()}/dispatch/guides${suffix}`;
@@ -86,6 +87,11 @@ export const DispatchGuideService = {
 
   async assignmentStatuses(): Promise<DispatchCatalogItem[]> {
     const response = await httpStore.get<DispatchCatalogItem[]>(guidesUrl("/assignment-statuses"));
+    return response.data;
+  },
+
+  async deliveryScopes(): Promise<DispatchCatalogItem[]> {
+    const response = await httpStore.get<DispatchCatalogItem[]>(guidesUrl("/delivery-scopes"));
     return response.data;
   },
 };
