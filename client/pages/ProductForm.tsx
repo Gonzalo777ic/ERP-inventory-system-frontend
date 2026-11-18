@@ -304,7 +304,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ isOpen, onClose, onSubmit, in
 
                     {isDataLoading ? (
                         <div className="flex justify-center items-center h-40">
-                             <Loader2 className="w-8 h-8 animate-spin text-emerald-500" />
+                             <Loader2 className="w-8 h-8 animate-spin text-primary" />
                              <span className="ml-3 text-gray-500">Cargando datos maestros...</span>
                         </div>
                     ) : (
@@ -328,7 +328,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ isOpen, onClose, onSubmit, in
                                         value={formData.sku}
                                         onChange={handleChange}
                                         required
-                                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white p-2"
+                                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-ring focus:ring-ring dark:bg-gray-700 dark:border-gray-600 dark:text-white p-2"
                                     />
                                 </div>
                                 <div>
@@ -340,7 +340,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ isOpen, onClose, onSubmit, in
                                         value={formData.name}
                                         onChange={handleChange}
                                         required
-                                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white p-2"
+                                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-ring focus:ring-ring dark:bg-gray-700 dark:border-gray-600 dark:text-white p-2"
                                     />
                                 </div>
                             </div>
@@ -356,7 +356,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ isOpen, onClose, onSubmit, in
                                         value={formData.brandId}
                                         onChange={handleChange}
                                         required
-                                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white p-2"
+                                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-ring focus:ring-ring dark:bg-gray-700 dark:border-gray-600 dark:text-white p-2"
                                     >
                                         <option value="">Selecciona una Marca</option>
                                         {masterData.brands.map((brand) => (
@@ -374,7 +374,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ isOpen, onClose, onSubmit, in
                                         value={formData.categoryId}
                                         onChange={handleChange}
                                         required
-                                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white p-2"
+                                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-ring focus:ring-ring dark:bg-gray-700 dark:border-gray-600 dark:text-white p-2"
                                     >
                                         <option value="">Selecciona una Categoría</option>
                                         {masterData.categories.map((category) => (
@@ -396,7 +396,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ isOpen, onClose, onSubmit, in
                                             value={formData.preferredSupplierId}
                                             onChange={handleChange}
                                             required
-                                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white p-2"
+                                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-ring focus:ring-ring dark:bg-gray-700 dark:border-gray-600 dark:text-white p-2"
                                         >
                                             <option value="">Selecciona un Proveedor</option>
                                             {masterData.suppliers.map((supplier) => (
@@ -414,7 +414,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ isOpen, onClose, onSubmit, in
                                             value={formData.unitOfMeasureId}
                                             onChange={handleChange}
                                             required
-                                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white p-2"
+                                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-ring focus:ring-ring dark:bg-gray-700 dark:border-gray-600 dark:text-white p-2"
                                         >
                                             <option value="">Selecciona U.M.</option>
                                             {masterData.unitsOfMeasure.map((unit) => (
@@ -438,7 +438,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ isOpen, onClose, onSubmit, in
                                             required
                                             step="0.01"
                                             min="0.01"
-                                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white p-2"
+                                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-ring focus:ring-ring dark:bg-gray-700 dark:border-gray-600 dark:text-white p-2"
                                         />
                                     </div>
                                     
@@ -452,7 +452,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ isOpen, onClose, onSubmit, in
                                             onChange={handleChange}
                                             required
                                             min="0"
-                                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white p-2"
+                                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-ring focus:ring-ring dark:bg-gray-700 dark:border-gray-600 dark:text-white p-2"
                                         />
                                     </div>
                                 </div>
@@ -462,7 +462,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ isOpen, onClose, onSubmit, in
                                     <button
                                         type="submit"
                                         disabled={isLoading || isDataLoading}
-                                        className="flex items-center space-x-2 px-6 py-2 bg-emerald-600 text-white font-semibold rounded-lg shadow-md hover:bg-emerald-700 disabled:opacity-50 disabled:cursor-not-allowed transition"
+                                        className="flex items-center space-x-2 px-6 py-2 bg-primary text-white font-semibold rounded-lg shadow-md hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed transition"
                                     >
                                         {isLoading && <Loader2 className="w-4 h-4 animate-spin" />}
                                         <span>{isEditMode ? 'Guardar Cambios' : (currentProductId ? 'Guardar y Continuar' : 'Crear Producto')}</span>

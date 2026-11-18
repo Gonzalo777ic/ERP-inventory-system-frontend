@@ -109,7 +109,7 @@ export default function AlertsPage() {
                         <CardContent>
                             {calculatedAlerts.length === 0 && !loading ? (
                                 <div className="text-center py-10 text-slate-500">
-                                    <CheckCircle2 className="w-12 h-12 mx-auto mb-3 text-emerald-500 opacity-50" />
+                                    <CheckCircle2 className="w-12 h-12 mx-auto mb-3 text-primary opacity-50" />
                                     <p>¡Todo en orden! No hay productos con stock crítico.</p>
                                 </div>
                             ) : (
@@ -194,7 +194,7 @@ export default function AlertsPage() {
                                             <TableCell>
                                                 <Badge className={
                                                     alert.status === 'ACTIVE' ? 'bg-red-100 text-red-800 hover:bg-red-200' : 
-                                                    alert.status === 'RESOLVED' ? 'bg-emerald-100 text-emerald-800 hover:bg-emerald-200' : 
+                                                    alert.status === 'RESOLVED' ? 'bg-primary/10 text-primary hover:bg-primary/20' : 
                                                     'bg-slate-100 text-slate-800'
                                                 }>
                                                     {alert.status}
@@ -202,7 +202,7 @@ export default function AlertsPage() {
                                             </TableCell>
                                             <TableCell className="text-right space-x-2">
                                                 {alert.status === 'ACTIVE' && (
-                                                    <Button size="icon" variant="ghost" className="h-8 w-8 text-emerald-600" onClick={() => handleResolve(alert.id)} title="Marcar Resuelto">
+                                                    <Button size="icon" variant="ghost" className="h-8 w-8 text-primary" onClick={() => handleResolve(alert.id)} title="Marcar Resuelto">
                                                         <CheckCircle2 className="w-4 h-4" />
                                                     </Button>
                                                 )}

@@ -162,7 +162,7 @@ const ProductAttributeForm: React.FC<ProductAttributeFormProps> = ({
 
                 <Button
                     type="submit"
-                    className="w-full bg-blue-600 hover:bg-blue-700 mt-6" 
+                    className="w-full bg-primary hover:bg-primary/90 mt-6" 
                     disabled={isSubmitting}
                 >
                     {isSubmitting ? (

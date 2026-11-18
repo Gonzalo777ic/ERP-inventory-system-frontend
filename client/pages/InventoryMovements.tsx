@@ -43,7 +43,7 @@ export default function InventoryMovements() {
         const isPositive = quantity > 0;
         
         if (type.includes('VENTA')) return <Badge variant="destructive" className="gap-1"><ArrowDownCircle className="w-3 h-3"/> Venta</Badge>;
-        if (type.includes('ENTRADA')) return <Badge className="bg-emerald-600 gap-1"><ArrowUpCircle className="w-3 h-3"/> Entrada</Badge>;
+        if (type.includes('ENTRADA')) return <Badge className="bg-primary gap-1"><ArrowUpCircle className="w-3 h-3"/> Entrada</Badge>;
         if (type.includes('AJUSTE')) return <Badge variant="outline" className="gap-1 border-amber-500 text-amber-600"><RefreshCw className="w-3 h-3"/> Ajuste</Badge>;
         
         return <Badge variant={isPositive ? "default" : "secondary"}>{type}</Badge>;
@@ -127,7 +127,7 @@ export default function InventoryMovements() {
                                                 )}
                                             </TableCell>
                                             
-                                            <TableCell className={`text-right font-bold ${mov.quantityChange > 0 ? 'text-emerald-600' : 'text-red-600'}`}>
+                                            <TableCell className={`text-right font-bold ${mov.quantityChange > 0 ? 'text-primary' : 'text-red-600'}`}>
                                                 {mov.quantityChange > 0 ? '+' : ''}{mov.quantityChange}
                                             </TableCell>
                                             

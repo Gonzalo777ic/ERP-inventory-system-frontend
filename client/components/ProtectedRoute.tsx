@@ -23,7 +23,7 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children, allowedRoles 
   if (!isAuthReady) {
     return (
       <div className="flex items-center justify-center min-h-screen bg-gray-50 dark:bg-gray-900">
-        <div className="text-xl font-medium text-emerald-600 animate-pulse">Verificando permisos...</div>
+        <div className="text-xl font-medium text-primary animate-pulse">Verificando permisos...</div>
       </div>
     );
   }

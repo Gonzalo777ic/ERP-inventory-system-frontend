@@ -102,7 +102,7 @@ const UOM: React.FC = () => {
             <Card className="shadow-lg dark:bg-gray-900">
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                     <CardTitle className="text-2xl font-bold flex items-center dark:text-gray-100">
-                        <Scale className="w-6 h-6 mr-3 text-emerald-500" />
+                        <Scale className="w-6 h-6 mr-3 text-primary" />
                         Unidades de Medida (UOM)
                     </CardTitle>
                     <div className="flex space-x-4">
@@ -118,7 +118,7 @@ const UOM: React.FC = () => {
                         </div>
                         <Button 
                             onClick={() => handleOpenForm(null)}
-                            className="flex items-center space-x-2 bg-emerald-600 hover:bg-emerald-700"
+                            className="flex items-center space-x-2 bg-primary hover:bg-primary/90"
                         >
                             <PlusCircle className="w-5 h-5" />
                             <span>Nueva Unidad</span>
@@ -138,7 +138,7 @@ const UOM: React.FC = () => {
                                     : "No se encontraron unidades que coincidan con la búsqueda."}
                             </p>
                             {unitsOfMeasure.length === 0 && (
-                                <Button onClick={() => handleOpenForm(null)} variant="link" className="text-emerald-600">
+                                <Button onClick={() => handleOpenForm(null)} variant="link" className="text-primary">
                                     ¡Crea la primera ahora!
                                 </Button>
                             )}

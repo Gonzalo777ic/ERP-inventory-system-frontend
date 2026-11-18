@@ -88,7 +88,7 @@ export const AnnouncementForm: React.FC<AnnouncementFormProps> = ({
                         <input 
                             required
                             type="text" 
-                            className="w-full rounded-lg border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-emerald-500 focus:border-emerald-500 p-2 border"
+                            className="w-full rounded-lg border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-ring focus:border-ring p-2 border"
                             value={formData.title}
                             onChange={e => setFormData({...formData, title: e.target.value})}
                             placeholder="Ej: Mantenimiento Programado"
@@ -100,7 +100,7 @@ export const AnnouncementForm: React.FC<AnnouncementFormProps> = ({
                         <textarea 
                             required
                             rows={3}
-                            className="w-full rounded-lg border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-emerald-500 focus:border-emerald-500 p-2 border"
+                            className="w-full rounded-lg border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-ring focus:border-ring p-2 border"
                             value={formData.content}
                             onChange={e => setFormData({...formData, content: e.target.value})}
                         />
@@ -170,8 +170,8 @@ export const AnnouncementForm: React.FC<AnnouncementFormProps> = ({
                             role="switch"
                             aria-checked={formData.isActive}
                             onClick={() => setFormData({ ...formData, isActive: !formData.isActive })}
-                            className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 ${
-                                formData.isActive ? 'bg-emerald-600' : 'bg-gray-200 dark:bg-gray-600'
+                            className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 ${
+                                formData.isActive ? 'bg-primary' : 'bg-gray-200 dark:bg-gray-600'
                             }`}
                         >
                             <span
@@ -193,7 +193,7 @@ export const AnnouncementForm: React.FC<AnnouncementFormProps> = ({
                         <button 
                             type="submit"
                             disabled={isSubmitting}
-                            className="px-4 py-2 rounded-lg bg-emerald-600 text-white hover:bg-emerald-700 flex items-center gap-2 transition-colors disabled:opacity-50"
+                            className="px-4 py-2 rounded-lg bg-primary text-white hover:bg-primary/90 flex items-center gap-2 transition-colors disabled:opacity-50"
                         >
                             <Save className="w-4 h-4" /> {isSubmitting ? 'Guardando...' : 'Guardar'}
                         </button>

@@ -206,7 +206,7 @@ const SupplierUsersManager: React.FC<SupplierUsersManagerProps> = ({ isOpen, onC
                         <AlertDialogDescription className="pt-2 text-gray-700">
                             El usuario <span className="font-bold text-gray-900">{confirmingUser?.username}</span> ya está vinculado a la empresa 
                             <span className="font-bold block text-indigo-600 my-1">{getSupplierNameById(confirmingUser?.supplierId || null)}</span>
-                            ¿Está seguro de reasignarlo a <span className="font-bold text-emerald-600">{supplierName}</span>? 
+                            ¿Está seguro de reasignarlo a <span className="font-bold text-primary">{supplierName}</span>? 
                             <br/><br/>
                             Esto revocará inmediatamente su acceso a la información del proveedor anterior.
                         </AlertDialogDescription>

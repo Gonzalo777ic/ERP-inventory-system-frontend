@@ -120,7 +120,7 @@ const StoreSchedulePage: React.FC = () => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div className="md:col-span-2">
                     <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 flex items-center gap-2">
-                        <Clock className="h-8 w-8 text-emerald-600" />
+                        <Clock className="h-8 w-8 text-primary" />
                         Horarios de Atención
                     </h1>
                     <p className="text-gray-600 dark:text-gray-400 mt-1">
@@ -130,11 +130,11 @@ const StoreSchedulePage: React.FC = () => {
 
                 <div className={`p-4 rounded-xl border flex items-center gap-4 shadow-sm ${
                     status?.status === 'OPEN' 
-                        ? 'bg-emerald-50 border-emerald-200 dark:bg-emerald-900/20 dark:border-emerald-800' 
+                        ? 'bg-primary/5 border-primary/20 dark:bg-primary/10 dark:border-primary/40' 
                         : 'bg-rose-50 border-rose-200 dark:bg-rose-900/20 dark:border-rose-800'
                 }`}>
                     <div className={`p-2 rounded-full ${
-                        status?.status === 'OPEN' ? 'bg-emerald-100 text-emerald-600' : 'bg-rose-100 text-rose-600'
+                        status?.status === 'OPEN' ? 'bg-primary/10 text-primary' : 'bg-rose-100 text-rose-600'
                     }`}>
                         {status?.status === 'OPEN' ? <CheckCircle2 className="w-6 h-6"/> : <XCircle className="w-6 h-6"/>}
                     </div>
@@ -169,7 +169,7 @@ const StoreSchedulePage: React.FC = () => {
                         onClick={() => setActiveTab('WEEKLY')}
                         className={`py-4 px-1 border-b-2 font-medium text-sm flex items-center gap-2 ${
                             activeTab === 'WEEKLY'
-                                ? 'border-emerald-500 text-emerald-600'
+                                ? 'border-primary text-primary'
                                 : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
                         }`}
                     >
@@ -179,7 +179,7 @@ const StoreSchedulePage: React.FC = () => {
                         onClick={() => setActiveTab('EXCEPTIONS')}
                         className={`py-4 px-1 border-b-2 font-medium text-sm flex items-center gap-2 ${
                             activeTab === 'EXCEPTIONS'
-                                ? 'border-emerald-500 text-emerald-600'
+                                ? 'border-primary text-primary'
                                 : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
                         }`}
                     >
@@ -216,7 +216,7 @@ const StoreSchedulePage: React.FC = () => {
                                             <button
                                                 onClick={() => handleDayChange(idx, 'isOpen', !day.isOpen)}
                                                 className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-                                                    day.isOpen ? 'bg-emerald-600' : 'bg-gray-200 dark:bg-gray-600'
+                                                    day.isOpen ? 'bg-primary' : 'bg-gray-200 dark:bg-gray-600'
                                                 }`}
                                             >
                                                 <span className={`${day.isOpen ? 'translate-x-6' : 'translate-x-1'} inline-block h-4 w-4 transform rounded-full bg-white transition-transform`}/>
@@ -244,7 +244,7 @@ const StoreSchedulePage: React.FC = () => {
                                         <td className="px-6 py-4 whitespace-nowrap text-right">
                                             <button 
                                                 onClick={() => handleUpdateDay(day)}
-                                                className="text-emerald-600 hover:text-emerald-900 bg-emerald-50 hover:bg-emerald-100 p-2 rounded-lg transition-colors"
+                                                className="text-primary hover:text-primary bg-primary/5 hover:bg-primary/10 p-2 rounded-lg transition-colors"
                                                 title="Guardar cambios de este día"
                                             >
                                                 <Save className="w-5 h-5" />
@@ -266,7 +266,7 @@ const StoreSchedulePage: React.FC = () => {
                             </div>
                             <button 
                                 onClick={() => { setEditingException(null); setIsModalOpen(true); }}
-                                className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors shadow-sm"
+                                className="flex items-center gap-2 bg-primary hover:bg-primary/90 text-white px-4 py-2 rounded-lg transition-colors shadow-sm"
                             >
                                 <Plus className="h-4 w-4" /> Agregar Excepción
                             </button>

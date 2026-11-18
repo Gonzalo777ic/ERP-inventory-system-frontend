@@ -108,7 +108,7 @@ export const ScheduleExceptionForm: React.FC<Props> = ({ isOpen, onClose, onSubm
                                 type="radio" 
                                 checked={formData.isClosed} 
                                 onChange={() => setFormData({...formData, isClosed: true})}
-                                className="text-emerald-600 focus:ring-emerald-500"
+                                className="text-primary focus:ring-ring"
                             />
                             <span className="text-sm font-medium">Cerrado todo el día</span>
                         </label>
@@ -117,7 +117,7 @@ export const ScheduleExceptionForm: React.FC<Props> = ({ isOpen, onClose, onSubm
                                 type="radio" 
                                 checked={!formData.isClosed} 
                                 onChange={() => setFormData({...formData, isClosed: false})}
-                                className="text-emerald-600 focus:ring-emerald-500"
+                                className="text-primary focus:ring-ring"
                             />
                             <span className="text-sm font-medium">Horario Especial</span>
                         </label>
@@ -155,7 +155,7 @@ export const ScheduleExceptionForm: React.FC<Props> = ({ isOpen, onClose, onSubm
 
                     <div className="flex justify-end gap-3 pt-4 border-t border-gray-200 dark:border-gray-700">
                         <button type="button" onClick={onClose} className="px-4 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-50 transition-colors">Cancelar</button>
-                        <button type="submit" disabled={isSubmitting} className="px-4 py-2 rounded-lg bg-emerald-600 text-white hover:bg-emerald-700 flex items-center gap-2 transition-colors disabled:opacity-50">
+                        <button type="submit" disabled={isSubmitting} className="px-4 py-2 rounded-lg bg-primary text-white hover:bg-primary/90 flex items-center gap-2 transition-colors disabled:opacity-50">
                             <Save className="w-4 h-4" /> {isSubmitting ? 'Guardando...' : 'Guardar'}
                         </button>
                     </div>

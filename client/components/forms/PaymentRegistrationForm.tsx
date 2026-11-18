@@ -191,7 +191,7 @@ export const PaymentRegistrationForm: React.FC<Props> = ({ sale, balance, onSucc
 
         <div className="flex justify-end gap-2 pt-4">
             <Button type="button" variant="outline" onClick={onCancel}>Cancelar</Button>
-            <Button type="submit" disabled={createMutation.isPending} className="bg-emerald-600 hover:bg-emerald-700">
+            <Button type="submit" disabled={createMutation.isPending} className="bg-primary hover:bg-primary/90">
                 {createMutation.isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                 Confirmar Pago
             </Button>

@@ -290,7 +290,7 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({
             placeholder="Pegar URL de imagen aquí"
             value={imageUrlInput}
             onChange={handleUrlChange}
-            className="block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white p-2 pl-9"
+            className="block w-full rounded-md border-gray-300 shadow-sm focus:border-ring focus:ring-ring dark:bg-gray-700 dark:border-gray-600 dark:text-white p-2 pl-9"
             disabled={isUploading || isLoading || localFile !== null}
           />
           <Link className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
@@ -299,7 +299,7 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({
         <button
           type="button"
           disabled={true}
-          className="flex items-center justify-center p-2 bg-emerald-600 text-white font-semibold rounded-md shadow-md hover:bg-emerald-700 disabled:opacity-50 transition min-w-[100px]"
+          className="flex items-center justify-center p-2 bg-primary text-white font-semibold rounded-md shadow-md hover:bg-primary/90 disabled:opacity-50 transition min-w-[100px]"
           title="Pegue la URL para previsualizar"
         >
           <span>Guardar</span>
@@ -323,7 +323,7 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({
       {}
       {showPreviewMode && localPreviewUrl ? (
 
-        <div className="border-2 border-dashed border-emerald-500 bg-emerald-50 dark:bg-emerald-900/30 rounded-xl p-4 text-center animate-fadeIn">
+        <div className="border-2 border-dashed border-primary bg-primary/5 dark:bg-primary/20 rounded-xl p-4 text-center animate-fadeIn">
           <div className="flex justify-center items-center h-48 w-full overflow-hidden mb-3">
             <img
               src={localPreviewUrl}
@@ -354,7 +354,7 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({
                 isLoading ||
                 (pendingUrl && urlPreviewError !== null)
               }
-              className="flex items-center space-x-2 px-4 py-2 bg-emerald-600 text-white font-semibold rounded-lg shadow-md hover:bg-emerald-700 disabled:opacity-50 transition min-w-[120px]"
+              className="flex items-center space-x-2 px-4 py-2 bg-primary text-white font-semibold rounded-lg shadow-md hover:bg-primary/90 disabled:opacity-50 transition min-w-[120px]"
             >
               {isUploading ? (
                 <Loader2 className="w-4 h-4 animate-spin" />
@@ -374,7 +374,7 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({
       ) : (
 
         <div
-          className="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-xl p-6 text-center cursor-pointer hover:border-emerald-500 transition duration-150"
+          className="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-xl p-6 text-center cursor-pointer hover:border-primary transition duration-150"
           onDragOver={handleDragOver}
           onDrop={handleDrop}
           onClick={() => document.getElementById("fileInput")?.click()}
@@ -387,7 +387,7 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({
             className="hidden"
             disabled={isUploading || isLoading}
           />
-          <UploadCloud className="w-10 h-10 mx-auto text-emerald-500 mb-2" />
+          <UploadCloud className="w-10 h-10 mx-auto text-primary mb-2" />
           <p className="text-sm font-medium dark:text-gray-300">
             Arrastra y suelta una imagen local, o haz click para seleccionar.
           </p>
@@ -397,7 +397,7 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({
       {}
       {isLoading && (
         <div className="flex justify-center items-center h-20">
-          <Loader2 className="w-6 h-6 animate-spin text-emerald-500" />
+          <Loader2 className="w-6 h-6 animate-spin text-primary" />
           <span className="ml-3 text-gray-500">Cargando imágenes...</span>
         </div>
       )}
@@ -433,7 +433,7 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({
                 {}
                 <button
                   onClick={() => handleSetDefault(img.id)}
-                  className={`p-2 rounded-full transition ${img.isDefault ? "bg-emerald-500 text-white" : "bg-white text-gray-800 hover:bg-emerald-100"}`}
+                  className={`p-2 rounded-full transition ${img.isDefault ? "bg-primary text-white" : "bg-white text-gray-800 hover:bg-primary/10"}`}
                   title={
                     img.isDefault
                       ? "Imagen Principal"
@@ -459,7 +459,7 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({
 
               {}
               {img.isDefault && (
-                <div className="absolute top-2 left-2 bg-emerald-500 text-white text-xs font-bold px-2 py-1 rounded-full shadow-lg flex items-center space-x-1">
+                <div className="absolute top-2 left-2 bg-primary text-white text-xs font-bold px-2 py-1 rounded-full shadow-lg flex items-center space-x-1">
                   <Star className="w-3 h-3 fill-current" />
                   <span>Principal</span>
                 </div>

@@ -249,7 +249,7 @@ export const QuotationFormSupplier: React.FC<Props> = ({ supplierId, initialData
         </div>
 
         <div className="flex justify-end gap-2">
-            <Button type="submit" disabled={isLoading} className="bg-blue-600 hover:bg-blue-700">
+            <Button type="submit" disabled={isLoading} className="bg-primary hover:bg-primary/90">
                 <Save className="mr-2 h-4 w-4"/> 
                 {isLoading ? 'Guardando...' : (initialData ? 'Guardar Cambios' : 'Guardar Borrador')}
             </Button>

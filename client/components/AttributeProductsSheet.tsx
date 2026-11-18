@@ -42,7 +42,7 @@ export const AttributeProductsSheet: React.FC<Props> = ({
       <SheetContent className="w-full sm:w-[540px] flex flex-col h-full bg-white dark:bg-gray-900 border-l dark:border-gray-800">
         <SheetHeader className="pb-4 border-b dark:border-gray-800">
           <SheetTitle className="flex items-center gap-2 text-xl dark:text-gray-100">
-            <Tag className="w-5 h-5 text-emerald-600" />
+            <Tag className="w-5 h-5 text-primary" />
             Uso de: "{attributeName}"
           </SheetTitle>
           <SheetDescription className="dark:text-gray-400">
@@ -54,7 +54,7 @@ export const AttributeProductsSheet: React.FC<Props> = ({
         <div className="flex-1 py-4 overflow-hidden relative">
           {isLoading ? (
             <div className="flex flex-col justify-center items-center h-full text-gray-500 gap-2">
-              <Loader2 className="w-8 h-8 animate-spin text-emerald-600" />
+              <Loader2 className="w-8 h-8 animate-spin text-primary" />
               <span className="text-sm">Buscando productos...</span>
             </div>
           ) : isError ? (
@@ -79,7 +79,7 @@ export const AttributeProductsSheet: React.FC<Props> = ({
                     className="flex items-center justify-between p-3 rounded-lg border border-gray-100 dark:border-gray-800 bg-gray-50/50 dark:bg-gray-800/50 hover:bg-white dark:hover:bg-gray-800 transition-colors shadow-sm group"
                   >
                     <div className="flex items-center gap-3">
-                      <div className="bg-white dark:bg-gray-700 p-2 rounded-md border border-gray-200 dark:border-gray-600 group-hover:border-emerald-200 transition-colors">
+                      <div className="bg-white dark:bg-gray-700 p-2 rounded-md border border-gray-200 dark:border-gray-600 group-hover:border-primary/30 transition-colors">
                         <Package className="w-5 h-5 text-gray-600 dark:text-gray-300" />
                       </div>
                       <div>
@@ -98,7 +98,7 @@ export const AttributeProductsSheet: React.FC<Props> = ({
                       </span>
                       <Badge
                         variant="outline"
-                        className="bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-900/30 dark:text-emerald-400 dark:border-emerald-800 font-mono"
+                        className="bg-primary/5 text-primary border-primary/20 dark:bg-primary/20 dark:text-primary dark:border-primary/40 font-mono"
                       >
                         {item.attributeValue}
                       </Badge>

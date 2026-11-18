@@ -153,7 +153,7 @@ const ProductList: React.FC = () => {
   if (isLoadingProducts) {
     return (
       <div className="p-6 flex justify-center items-center h-64 dark:text-gray-300">
-        <Loader2 className="w-8 h-8 animate-spin text-emerald-600" />{" "}
+        <Loader2 className="w-8 h-8 animate-spin text-primary" />{" "}
         <span className="ml-3 text-lg">Cargando catálogo...</span>
       </div>
     );
@@ -245,7 +245,7 @@ const ProductList: React.FC = () => {
             <Search className="absolute left-3 h-4 w-4 text-gray-400" />
             <Input
               placeholder="Buscar producto, SKU o marca..."
-              className="pl-9 bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 dark:text-gray-100 focus:border-emerald-500"
+              className="pl-9 bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 dark:text-gray-100 focus:border-ring"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
@@ -263,7 +263,7 @@ const ProductList: React.FC = () => {
 
           <Button
             onClick={() => handleOpenForm(null)}
-            className="flex items-center space-x-2 px-4 py-2 bg-emerald-600 text-white shadow-md hover:bg-emerald-700 transition"
+            className="flex items-center space-x-2 px-4 py-2 bg-primary text-white shadow-md hover:bg-primary/90 transition"
           >
             <Plus className="w-5 h-5" />
             <span>Añadir Producto</span>
@@ -324,7 +324,7 @@ const ProductList: React.FC = () => {
               filteredProducts.map((product) => (
                 <TableRow
                   key={product.id}
-                  className="border-gray-200 dark:border-gray-800 hover:bg-emerald-50/20 dark:hover:bg-gray-800 transition-colors duration-150"
+                  className="border-gray-200 dark:border-gray-800 hover:bg-primary/5 dark:hover:bg-gray-800 transition-colors duration-150"
                 >
                   <TableCell>
                     <img
@@ -384,7 +384,7 @@ const ProductList: React.FC = () => {
                         onClick={() =>
                           product.id && handleOpenDetailModal(product)
                         }
-                        className="text-emerald-600 hover:bg-emerald-100 dark:text-emerald-400 dark:hover:bg-gray-700"
+                        className="text-primary hover:bg-primary/10 dark:text-primary dark:hover:bg-gray-700"
                         title="Ver Detalle"
                       >
                         <Eye className="w-4 h-4" />

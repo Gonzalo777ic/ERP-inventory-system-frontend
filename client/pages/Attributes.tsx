@@ -224,7 +224,7 @@ const Attributes: React.FC = () => {
                           variant="ghost"
                           size="icon"
                           onClick={() => handleOpenSheet(attr)}
-                          className="text-emerald-600 hover:bg-emerald-100 dark:text-emerald-400 dark:hover:bg-gray-700"
+                          className="text-primary hover:bg-primary/10 dark:text-primary dark:hover:bg-gray-700"
                           title="Ver productos que usan este atributo"
                         >
                           <List className="w-4 h-4" />

@@ -173,7 +173,7 @@ const ProductAttributesPage: React.FC = () => {
   if (isProductLoading)
     return (
       <div className="h-screen flex items-center justify-center">
-        <Loader2 className="animate-spin w-8 h-8 text-emerald-600" />
+        <Loader2 className="animate-spin w-8 h-8 text-primary" />
       </div>
     );
   if (!product)
@@ -218,7 +218,7 @@ const ProductAttributesPage: React.FC = () => {
               setValueInput("");
               setIsModalOpen(true);
             }}
-            className="bg-emerald-600 hover:bg-emerald-700 text-white shadow-sm"
+            className="bg-primary hover:bg-primary/90 text-white shadow-sm"
           >
             <Plus className="w-4 h-4 mr-2" />
             Asignar Atributo
@@ -239,7 +239,7 @@ const ProductAttributesPage: React.FC = () => {
 
           {isValuesLoading ? (
             <div className="flex justify-center py-10">
-              <Loader2 className="animate-spin text-emerald-600" />
+              <Loader2 className="animate-spin text-primary" />
             </div>
           ) : filteredValues.length === 0 ? (
             <div className="text-center py-16 bg-white dark:bg-gray-800 rounded-xl border border-dashed border-gray-200 dark:border-gray-700">
@@ -258,7 +258,7 @@ const ProductAttributesPage: React.FC = () => {
                 return (
                   <Card
                     key={val.attributeId}
-                    className="group hover:shadow-md transition-shadow dark:bg-gray-800 border-l-4 border-l-emerald-500 relative"
+                    className="group hover:shadow-md transition-shadow dark:bg-gray-800 border-l-4 border-l-primary relative"
                   >
                     <CardContent className="p-4 flex justify-between items-start">
                       <div>
@@ -397,7 +397,7 @@ const ProductAttributesPage: React.FC = () => {
                   createMutation.isPending ||
                   updateMutation.isPending
                 }
-                className="bg-emerald-600 hover:bg-emerald-700"
+                className="bg-primary hover:bg-primary/90"
               >
                 {(createMutation.isPending || updateMutation.isPending) && (
                   <Loader2 className="w-4 h-4 mr-2 animate-spin" />

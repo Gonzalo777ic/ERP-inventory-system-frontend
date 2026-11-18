@@ -80,7 +80,7 @@ const ProductImageCarousel: React.FC<ProductImageCarouselProps> = ({ productName
 
     
     if (isLoading) {
-        return <div className="flex justify-center items-center h-full min-h-[300px]"><Loader2 className="w-8 h-8 animate-spin text-emerald-500" /></div>;
+        return <div className="flex justify-center items-center h-full min-h-[300px]"><Loader2 className="w-8 h-8 animate-spin text-primary" /></div>;
     }
 
     if (images.length === 0 || !currentImage) {
@@ -88,7 +88,7 @@ const ProductImageCarousel: React.FC<ProductImageCarouselProps> = ({ productName
             <div className="flex flex-col justify-center items-center h-full min-h-[300px] text-gray-500 bg-gray-100 dark:bg-gray-900 rounded-xl border border-dashed border-gray-300">
                 <ImageIcon className="w-12 h-12 text-gray-400" />
                 <p className="mt-2 text-sm">No hay imágenes disponibles.</p>
-                <p className="text-xs text-emerald-500">Producto ID: {productId}</p>
+                <p className="text-xs text-primary">Producto ID: {productId}</p>
             </div>
         );
     }
@@ -153,7 +153,7 @@ const ProductImageCarousel: React.FC<ProductImageCarouselProps> = ({ productName
                         key={img.id}
                         className={`flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden border-2 cursor-pointer transition-all duration-200 shadow-md ${
                             index === currentIndex
-                                ? 'border-emerald-500 ring-4 ring-emerald-200 dark:ring-emerald-700/50'
+                                ? 'border-primary ring-4 ring-primary/30 dark:ring-primary/40'
                                 : 'border-gray-300 hover:border-gray-400 dark:border-gray-600 dark:hover:border-gray-400'
                         }`}
                         onClick={() => setCurrentIndex(index)}

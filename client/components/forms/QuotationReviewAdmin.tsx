@@ -156,7 +156,7 @@ export const QuotationReviewAdmin: React.FC = () => {
                 <Button 
                     onClick={() => convertMutation.mutate()} 
                     disabled={convertMutation.isPending || quotation.status === 'CONVERTIDO'}
-                    className="bg-green-700 hover:bg-green-800"
+                    className="bg-primary hover:bg-primary/90"
                 >
                     <ShoppingCart className="w-4 h-4 mr-2"/> 
                     {quotation.status === 'CONVERTIDO' ? 'Ya Convertida' : 'Aceptar y Convertir a Orden'}

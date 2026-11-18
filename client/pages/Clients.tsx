@@ -36,8 +36,8 @@ const ClientsPage: React.FC = () => {
     if (isLoading) {
         return (
             <div className="flex justify-center items-center h-full min-h-screen">
-                <Loader2 className="mr-2 h-8 w-8 animate-spin text-emerald-600" />
-                <span className="text-lg text-emerald-600">Cargando clientes...</span>
+                <Loader2 className="mr-2 h-8 w-8 animate-spin text-primary" />
+                <span className="text-lg text-primary">Cargando clientes...</span>
             </div>
         );
     }
@@ -77,7 +77,7 @@ const ClientsPage: React.FC = () => {
                     <TableBody>
                         {clients && clients.length > 0 ? (
                             clients.map((client) => (
-                                <TableRow key={client.id} className="hover:bg-emerald-50/50">
+                                <TableRow key={client.id} className="hover:bg-primary/5">
                                     <TableCell className="font-medium text-gray-700">{client.id}</TableCell>
                                     <TableCell className="font-medium">{formatValue(client.fullName)}</TableCell>
                                     <TableCell>{formatValue(client.email)}</TableCell>

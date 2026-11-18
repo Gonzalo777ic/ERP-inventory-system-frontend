@@ -240,7 +240,7 @@ export const DocumentPreviewModal: React.FC<DocumentPreviewModalProps> = ({ open
                                 });
                             }}
                             disabled={isLoading}
-                            className="bg-blue-600 hover:bg-blue-700 text-white"
+                            className="bg-primary hover:bg-primary/90 text-white"
                         >
                             {isLoading ? <Loader2 className="w-4 h-4 mr-2 animate-spin"/> : <PenTool className="w-4 h-4 mr-2"/>}
                             Firmar Documento

@@ -227,7 +227,7 @@ const Categories: React.FC = () => {
 
             <Button
               onClick={() => handleOpenForm(null)}
-              className="flex items-center space-x-2 bg-blue-600 hover:bg-blue-700"
+              className="flex items-center space-x-2 bg-primary hover:bg-primary/90"
             >
               <PlusCircle className="w-5 h-5" />
               <span>Nueva Categoría</span>

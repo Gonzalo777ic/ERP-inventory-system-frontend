@@ -32,7 +32,7 @@ export const WeeklyScheduleSummary: React.FC<Props> = ({ schedule }) => {
                     key={day.id} 
                     className={`flex flex-col items-center justify-center p-3 rounded-xl border transition-all ${
                         day.isOpen 
-                            ? 'bg-white dark:bg-gray-800 border-emerald-200 dark:border-emerald-800/50 shadow-sm' 
+                            ? 'bg-white dark:bg-gray-800 border-primary/20 dark:border-primary/40 shadow-sm' 
                             : 'bg-gray-50 dark:bg-gray-900 border-gray-200 dark:border-gray-700 opacity-70'
                     }`}
                 >
@@ -40,7 +40,7 @@ export const WeeklyScheduleSummary: React.FC<Props> = ({ schedule }) => {
                     <div className="mb-2">
                         <span className={`text-sm font-bold w-8 h-8 flex items-center justify-center rounded-full ${
                             day.isOpen 
-                                ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400'
+                                ? 'bg-primary/10 text-primary dark:bg-primary/20 dark:text-primary'
                                 : 'bg-gray-200 text-gray-500 dark:bg-gray-700 dark:text-gray-400'
                         }`}>
                             {DAY_INITIALS[day.dayOfWeek]}
@@ -51,7 +51,7 @@ export const WeeklyScheduleSummary: React.FC<Props> = ({ schedule }) => {
                     {day.isOpen ? (
                         <div className="text-center">
                             <div className="flex items-center justify-center gap-1 mb-1">
-                                <span className="text-xs font-semibold text-emerald-600 dark:text-emerald-400">Abierto</span>
+                                <span className="text-xs font-semibold text-primary dark:text-primary">Abierto</span>
                             </div>
                             <div className="text-xs text-gray-600 dark:text-gray-300 font-mono bg-gray-100 dark:bg-gray-700/50 px-2 py-0.5 rounded">
                                 {formatTime(day.openingTime)} - {formatTime(day.closingTime)}

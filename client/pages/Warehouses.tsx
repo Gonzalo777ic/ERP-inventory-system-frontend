@@ -92,7 +92,7 @@ const WarehousesPage: React.FC = () => {
                     </CardTitle>
                     <Dialog open={isFormOpen} onOpenChange={setIsFormOpen}>
                         <DialogTrigger asChild>
-                            <Button onClick={handleOpenCreate} className="bg-emerald-600 hover:bg-emerald-700">
+                            <Button onClick={handleOpenCreate} className="bg-primary hover:bg-primary/90">
                                 <PlusCircle className="w-4 h-4 mr-2" /> Crear Nuevo Almacén
                             </Button>
                         </DialogTrigger>
@@ -129,7 +129,7 @@ const WarehousesPage: React.FC = () => {
                                         <TableCell>{warehouse.locationAddress}</TableCell>
                                         <TableCell className="text-center">
                                             {warehouse.isMain ? (
-                                                <Badge className="bg-emerald-500 hover:bg-emerald-600 dark:bg-emerald-700">
+                                                <Badge className="bg-primary hover:bg-primary/90 dark:bg-primary">
                                                     <CheckCircle className="w-3 h-3 mr-1" /> Principal
                                                 </Badge>
                                             ) : (

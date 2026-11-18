@@ -44,7 +44,7 @@ const Login = () => {
 
     return (
         <div className="flex min-h-screen">
-            <div className="hidden lg:flex w-1/2 bg-gradient-to-br from-blue-600 to-blue-800 items-center justify-center p-12">
+            <div className="hidden lg:flex w-1/2 bg-gradient-to-br from-primary to-primary/80 items-center justify-center p-12">
                 <div className="text-white">
                     <h1 className="text-5xl font-bold mb-4">ValeERP</h1>
                     <p className="text-lg opacity-80">Control de productos, ventas, proveedores y alertas de stock. Interfaz moderna, rápida y segura.</p>
@@ -58,7 +58,7 @@ const Login = () => {
                         <p className="text-muted-foreground mb-6">Inicia sesión para acceder al panel</p>
 
                         <Button 
-                            className="w-full bg-blue-600 hover:bg-blue-700" 
+                            className="w-full bg-primary hover:bg-primary/90" 
                             onClick={handleAuth0Login}
                         >
                             Iniciar sesión con Google/Auth0

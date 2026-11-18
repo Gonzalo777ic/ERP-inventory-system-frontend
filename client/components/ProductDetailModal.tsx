@@ -26,7 +26,7 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({ isOpen, onClose
 
     const DetailItem: React.FC<{ icon: React.ReactNode; label: string; value: string | number }> = ({ icon, label, value }) => (
         <div className="flex items-start space-x-3 p-3 bg-gray-50 dark:bg-gray-700 rounded-xl shadow-inner border border-gray-100 dark:border-gray-700">
-            <div className="text-emerald-500 flex-shrink-0 mt-0.5">
+            <div className="text-primary flex-shrink-0 mt-0.5">
                 {icon}
             </div>
             {}
@@ -51,7 +51,7 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({ isOpen, onClose
                     <div className="flex justify-between items-start border-b pb-4 mb-6">
                         <div className="flex flex-col">
                             <h3 className="text-3xl font-extrabold text-gray-900 dark:text-white">{product.name}</h3>
-                            <p className="text-md text-emerald-600 dark:text-emerald-400 mt-1">SKU: {product.sku}</p>
+                            <p className="text-md text-primary dark:text-primary mt-1">SKU: {product.sku}</p>
                         </div>
                         <button onClick={onClose} className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition">
                             <X className="w-6 h-6" />

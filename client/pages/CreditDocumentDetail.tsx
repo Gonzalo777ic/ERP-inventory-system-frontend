@@ -286,7 +286,7 @@ const CreditDocumentDetail: React.FC = () => {
                     <DialogFooter>
                         <Button variant="ghost" onClick={() => setDocToSign(null)}>Cancelar</Button>
                         <Button 
-                            className="bg-green-600 hover:bg-green-700" 
+                            className="bg-primary hover:bg-primary/90" 
                             onClick={() => docToSign && signMutation.mutate(docToSign.id)}
                             disabled={signMutation.isPending}
                         >

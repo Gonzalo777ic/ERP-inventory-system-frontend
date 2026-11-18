@@ -104,7 +104,7 @@ const UOMForm: React.FC<UOMFormProps> = ({ initialData, onSuccess, onClose }) =>
 
                 <Button 
                     type="submit" 
-                    className="w-full bg-emerald-600 hover:bg-emerald-700"
+                    className="w-full bg-primary hover:bg-primary/90"
                     disabled={mutation.isPending}
                 >
                     {mutation.isPending ? (

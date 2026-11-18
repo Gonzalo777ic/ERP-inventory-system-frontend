@@ -119,7 +119,7 @@ const Quotations: React.FC = () => {
                   
                   <Button 
                     size="sm" 
-                    className="bg-green-600 hover:bg-green-700 text-white" 
+                    className="bg-primary text-primary-foreground hover:bg-primary/90" 
                     onClick={() => setConfirmSendId(q.id)}
                   >
                       <Send className="w-4 h-4 mr-2"/> Enviar
@@ -273,7 +273,7 @@ const Quotations: React.FC = () => {
                     Cancelar
                 </Button>
                 <Button 
-                    className="bg-green-600 hover:bg-green-700"
+                    className="bg-primary hover:bg-primary/90"
                     onClick={() => {
                         if (confirmSendId) {
                             statusMutation.mutate({ id: confirmSendId, status: 'ENVIADO' });

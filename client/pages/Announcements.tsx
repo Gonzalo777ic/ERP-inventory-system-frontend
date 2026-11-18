@@ -149,7 +149,7 @@ const AnnouncementsPage: React.FC = () => {
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div>
           <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 flex items-center gap-2">
-            <Megaphone className="h-8 w-8 text-emerald-600" />
+            <Megaphone className="h-8 w-8 text-primary" />
             Anuncios y Comunicados
           </h1>
           <p className="text-gray-600 dark:text-gray-400">
@@ -158,7 +158,7 @@ const AnnouncementsPage: React.FC = () => {
         </div>
         <button
           onClick={handleCreateClick}
-          className="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg transition-colors shadow-sm"
+          className="flex items-center gap-2 bg-primary hover:bg-primary/90 text-white px-4 py-2 rounded-lg transition-colors shadow-sm"
         >
           <Plus className="h-5 w-5" /> Nuevo Anuncio
         </button>
@@ -230,7 +230,7 @@ const AnnouncementsPage: React.FC = () => {
                         className={`flex items-center gap-1 px-2 py-1 rounded-md text-xs font-semibold transition-colors
                                                 ${
                                                   ann.isActive
-                                                    ? "bg-emerald-100 text-emerald-700 hover:bg-emerald-200 border border-emerald-200"
+                                                    ? "bg-primary/10 text-primary hover:bg-primary/20 border border-primary/20"
                                                     : "bg-gray-100 text-gray-600 hover:bg-gray-200 border border-gray-200"
                                                 }`}
                       >
@@ -304,7 +304,7 @@ const AnnouncementsPage: React.FC = () => {
                                             : confirmState.confirmBtnStyle ===
                                                 "warning"
                                               ? "bg-amber-600 hover:bg-amber-700"
-                                              : "bg-emerald-600 hover:bg-emerald-700"
+                                              : "bg-primary hover:bg-primary/90"
                                         }`}
                 >
                   {confirmState.confirmBtnText}

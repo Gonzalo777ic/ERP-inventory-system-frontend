@@ -84,7 +84,7 @@ const queryClient = new QueryClient();
 
 const LoadingScreen = () => (
   <div className="flex items-center justify-center min-h-screen bg-gray-50 dark:bg-gray-900">
-    <div className="text-xl font-medium text-emerald-600 dark:text-emerald-400 animate-pulse">
+    <div className="text-xl font-medium text-primary dark:text-primary animate-pulse">
       Iniciando sesión...
     </div>
   </div>

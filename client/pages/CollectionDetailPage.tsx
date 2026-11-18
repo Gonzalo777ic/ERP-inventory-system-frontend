@@ -139,7 +139,7 @@ const CollectionDetailPage: React.FC = () => {
         </div>
 
         {!isFullyPaid && !isCancelled && (
-          <Button onClick={() => setIsPaymentOpen(true)} className="bg-emerald-600 hover:bg-emerald-700">
+          <Button onClick={() => setIsPaymentOpen(true)} className="bg-primary hover:bg-primary/90">
             <DollarSign className="w-4 h-4 mr-2" />
             Registrar Nuevo Pago
           </Button>
@@ -256,8 +256,8 @@ const CollectionDetailPage: React.FC = () => {
                                     label="Capital / Cuota Base"
                                     paid={paidCapital}
                                     total={expectedCapital}
-                                    colorClass="bg-emerald-500"
-                                    bgClass="bg-emerald-100"
+                                    colorClass="bg-primary"
+                                    bgClass="bg-primary/10"
                                 />
                             </div>
                         </TableCell>

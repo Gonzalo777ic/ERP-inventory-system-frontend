@@ -67,7 +67,7 @@ export const CashMovementForm: React.FC<Props> = ({
           onClick={() => setFormData({ ...formData, type: "INCOME" })}
           className={`cursor-pointer border rounded-lg p-3 text-center transition-all ${
             formData.type === "INCOME"
-              ? "bg-emerald-50 border-emerald-500 text-emerald-700 ring-1 ring-emerald-500"
+              ? "bg-primary/5 border-primary text-primary ring-1 ring-primary"
               : "hover:bg-gray-50"
           }`}
         >
@@ -175,7 +175,7 @@ export const CashMovementForm: React.FC<Props> = ({
           }
           className={
             formData.type === "INCOME"
-              ? "bg-emerald-600 hover:bg-emerald-700"
+              ? "bg-primary hover:bg-primary/90"
               : "bg-rose-600 hover:bg-rose-700"
           }
         >
