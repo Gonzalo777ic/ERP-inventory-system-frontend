@@ -1,6 +1,9 @@
 import React from "react";
 import { Navigate, Outlet } from "react-router-dom";
+import { useAuth0 } from "@auth0/auth0-react";
+import { LogOut, RotateCcw } from "lucide-react";
 import { useAuthStore } from "../store/auth";
+import { Button } from "./ui/button";
 
 interface ProtectedRouteProps {
   children?: React.ReactNode;
@@ -13,6 +16,8 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children, allowedRoles 
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
   const user = useAuthStore((state) => state.user);
   const isAuthReady = useAuthStore((state) => state.isAuthReady);
+  const logout = useAuthStore((state) => state.logout);
+  const { loginWithRedirect } = useAuth0();
 
 
   if (!isAuthReady) {
@@ -35,19 +40,36 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children, allowedRoles 
 
 
   if (!isStaff) {
+    const account = user?.email || "esta cuenta";
     return (
-      <div className="flex flex-col items-center justify-center min-h-screen bg-red-50 p-4">
-        <h1 className="text-2xl font-bold text-red-600 mb-2">Acceso Restringido</h1>
-        <p className="text-gray-600 text-center max-w-md">
-          Tu cuenta ({user?.email}) no tiene asignado un rol administrativo o de gestión en Auth0. 
-          Contacta al administrador para que te asigne el rol ROLE_ADMIN, ROLE_SUPPLIER, etc.
-        </p>
-        <button 
-          onClick={() => window.location.href = '/login'} 
-          className="mt-6 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700"
-        >
-          Volver a Intentar
-        </button>
+      <div className="flex min-h-screen items-center bg-background p-4 md:p-6">
+        <div className="mx-auto flex w-full max-w-4xl flex-col gap-6 rounded-lg border border-border bg-card p-6 shadow-sm md:flex-row md:items-center md:justify-between">
+          <div className="min-w-0 space-y-2 border-l-4 border-destructive pl-4">
+            <h1 className="text-xl font-bold text-foreground">Acceso restringido</h1>
+            <p className="text-sm text-muted-foreground">
+              {account} no tiene un rol de gestión. Pide al administrador que te asigne uno.
+              Cierra la sesión y vuelve a entrar para que el cambio quede aplicado.
+            </p>
+          </div>
+          <div className="flex shrink-0 flex-col gap-2 sm:flex-row md:flex-col">
+            <Button type="button" onClick={() => logout()}>
+              <LogOut className="h-5 w-5" />
+              Cerrar sesión
+            </Button>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => {
+                void loginWithRedirect({
+                  authorizationParams: { prompt: "login" },
+                });
+              }}
+            >
+              <RotateCcw className="h-5 w-5" />
+              Reintentar
+            </Button>
+          </div>
+        </div>
       </div>
     );
   }
