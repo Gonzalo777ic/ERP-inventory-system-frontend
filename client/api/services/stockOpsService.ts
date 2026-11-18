@@ -1,4 +1,4 @@
-import axios from "axios";
+import { http } from "../http";
 import {
   cloneCycleCounts,
   clonePickings,
@@ -15,7 +15,6 @@ import type {
 } from "../../types/inventory/stockOps";
 
 const MOCK_LATENCY_MS = 180;
-const STOCK_PATH = "/stock";
 
 let mockPickings: PickingResponse[] = clonePickings();
 let mockCycleCounts: CycleCountResponse[] = cloneCycleCounts();
@@ -41,14 +40,6 @@ function useStockMock(): boolean {
 
 function delay(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));
-}
-
-function stockUrl(path = ""): string {
-  const base = inventoryBaseUrl();
-  if (!base) {
-    throw new Error("VITE_INVENTORY_API_URL no configurada para Stock API.");
-  }
-  return `${base}${STOCK_PATH}${path}`;
 }
 
 function matchesText(haystack: string, search?: string): boolean {
@@ -112,7 +103,105 @@ function filterCycleCounts(
     .sort((a, b) => b.createdAt.localeCompare(a.createdAt));
 }
 
-const httpStock = axios.create();
+type PickingWire = {
+  id: number;
+  code?: string;
+  operationType: PickingResponse["operationType"];
+  status: PickingResponse["status"];
+  sourceWarehouseId?: number | null;
+  destinationWarehouseId?: number | null;
+  createdAt?: string;
+  confirmedAt?: string | null;
+  completedAt?: string | null;
+  cancelledAt?: string | null;
+  lines?: Array<{
+    id: number;
+    productId: number;
+    quantity?: number;
+    lotNumber?: string | null;
+    reserved?: boolean;
+  }>;
+};
+
+type CycleCountWire = {
+  id: number;
+  code?: string;
+  warehouseId?: number | null;
+  status: CycleCountResponse["status"];
+  createdAt?: string;
+  completedAt?: string | null;
+  cancelledAt?: string | null;
+  lines?: Array<{
+    id: number;
+    productId: number;
+    systemQuantity?: number;
+    countedQuantity?: number | null;
+    adjustmentDelta?: number | null;
+  }>;
+};
+
+function placeCode(id: number | null | undefined): string {
+  return id == null ? "—" : String(id);
+}
+
+function toPicking(raw: PickingWire): PickingResponse {
+  const lines = (raw.lines ?? []).map((line) => ({
+    id: line.id,
+    productId: line.productId,
+    productSku: "",
+    productName: "",
+    lotNumber: line.lotNumber ?? null,
+    demandQty: line.quantity ?? 0,
+    reservedQty: line.reserved ? line.quantity ?? 0 : 0,
+    doneQty: raw.status === "DONE" ? line.quantity ?? 0 : 0,
+    uom: "",
+  }));
+  const totalDemandQty = lines.reduce((sum, line) => sum + line.demandQty, 0);
+  const totalDoneQty = lines.reduce((sum, line) => sum + line.doneQty, 0);
+  return {
+    id: raw.id,
+    name: raw.code ?? String(raw.id),
+    operationType: raw.operationType,
+    status: raw.status,
+    sourceLocationCode: placeCode(raw.sourceWarehouseId),
+    destLocationCode: placeCode(raw.destinationWarehouseId),
+    warehouseCode: placeCode(raw.sourceWarehouseId),
+    scheduledAt: raw.createdAt ?? "",
+    confirmedAt: raw.confirmedAt ?? null,
+    doneAt: raw.completedAt ?? null,
+    cancelledAt: raw.cancelledAt ?? null,
+    lines,
+    totalDemandQty,
+    totalDoneQty,
+  };
+}
+
+function toCycleCount(raw: CycleCountWire): CycleCountResponse {
+  const lines = (raw.lines ?? []).map((line) => ({
+    id: line.id,
+    productId: line.productId,
+    productSku: "",
+    productName: "",
+    lotNumber: null,
+    theoreticalQty: line.systemQuantity ?? 0,
+    countedQty: line.countedQuantity ?? null,
+    differenceQty: line.adjustmentDelta ?? null,
+    uom: "",
+  }));
+  return {
+    id: raw.id,
+    name: raw.code ?? String(raw.id),
+    warehouseCode: placeCode(raw.warehouseId),
+    locationCode: "—",
+    status: raw.status,
+    createdAt: raw.createdAt ?? "",
+    completedAt: raw.completedAt ?? null,
+    cancelledAt: raw.cancelledAt ?? null,
+    lines,
+    lineCount: lines.length,
+    varianceLineCount: lines.filter((line) => (line.differenceQty ?? 0) !== 0).length,
+  };
+}
 
 export const StockOpsService = {
   isMockMode: (): boolean => useStockMock(),
@@ -133,8 +222,8 @@ export const StockOpsService = {
         pendingCycleCountCount,
       };
     }
-    const response = await httpStock.get<StockDashboardSummary>(
-      stockUrl("/dashboard"),
+    const response = await http.get<StockDashboardSummary>(
+      "/inventory/stock-dashboard",
     );
     return response.data;
   },
@@ -146,16 +235,8 @@ export const StockOpsService = {
       await delay(MOCK_LATENCY_MS);
       return filterPickings(mockPickings, query);
     }
-    const response = await httpStock.get<PickingResponse[]>(
-      stockUrl("/pickings"),
-      {
-        params: {
-          search: query.search || undefined,
-          status: query.status || undefined,
-        },
-      },
-    );
-    return response.data;
+    const response = await http.get<PickingWire[]>("/inventory/pickings");
+    return filterPickings(response.data.map(toPicking), query);
   },
 
   getPicking: async (id: number): Promise<PickingResponse> => {
@@ -165,15 +246,13 @@ export const StockOpsService = {
       if (!found) throw new Error(`Picking ${id} no encontrado.`);
       return { ...found, lines: found.lines.map((l) => ({ ...l })) };
     }
-    const response = await httpStock.get<PickingResponse>(
-      stockUrl(`/pickings/${id}`),
-    );
-    return response.data;
+    const response = await http.get<PickingWire>(`/inventory/pickings/${id}`);
+    return toPicking(response.data);
   },
 
   /**
    * Cancel / reverse a picking document. Never physical delete.
-   * API: POST /stock/pickings/{id}/cancel
+   * API: POST /inventory/pickings/{id}/cancel
    */
   cancelPicking: async (id: number): Promise<PickingResponse> => {
     if (useStockMock()) {
@@ -198,10 +277,10 @@ export const StockOpsService = {
       mockPickings = mockPickings.map((p) => (p.id === id ? cancelled : p));
       return { ...cancelled, lines: cancelled.lines.map((l) => ({ ...l })) };
     }
-    const response = await httpStock.post<PickingResponse>(
-      stockUrl(`/pickings/${id}/cancel`),
+    const response = await http.post<PickingWire>(
+      `/inventory/pickings/${id}/cancel`,
     );
-    return response.data;
+    return toPicking(response.data);
   },
 
   listCycleCounts: async (
@@ -211,21 +290,13 @@ export const StockOpsService = {
       await delay(MOCK_LATENCY_MS);
       return filterCycleCounts(mockCycleCounts, query);
     }
-    const response = await httpStock.get<CycleCountResponse[]>(
-      stockUrl("/cycle-counts"),
-      {
-        params: {
-          search: query.search || undefined,
-          status: query.status || undefined,
-        },
-      },
-    );
-    return response.data;
+    const response = await http.get<CycleCountWire[]>("/inventory/cycle-counts");
+    return filterCycleCounts(response.data.map(toCycleCount), query);
   },
 
   /**
    * Cancel an open cycle count. Never physical delete.
-   * API: POST /stock/cycle-counts/{id}/cancel
+   * API: POST /inventory/cycle-counts/{id}/cancel
    */
   cancelCycleCount: async (id: number): Promise<CycleCountResponse> => {
     if (useStockMock()) {
@@ -250,10 +321,10 @@ export const StockOpsService = {
       );
       return { ...cancelled, lines: cancelled.lines.map((l) => ({ ...l })) };
     }
-    const response = await httpStock.post<CycleCountResponse>(
-      stockUrl(`/cycle-counts/${id}/cancel`),
+    const response = await http.post<CycleCountWire>(
+      `/inventory/cycle-counts/${id}/cancel`,
     );
-    return response.data;
+    return toCycleCount(response.data);
   },
 
   listAdjustmentEntryPoints: async (): Promise<
@@ -263,10 +334,7 @@ export const StockOpsService = {
       await delay(MOCK_LATENCY_MS);
       return STOCK_ADJUSTMENT_ENTRY_POINTS.map((e) => ({ ...e }));
     }
-    const response = await httpStock.get<StockAdjustmentEntryPoint[]>(
-      stockUrl("/adjustment-entry-points"),
-    );
-    return response.data;
+    return STOCK_ADJUSTMENT_ENTRY_POINTS.map((entry) => ({ ...entry }));
   },
 
   /** Test/demo helper — resets in-memory fixtures. */

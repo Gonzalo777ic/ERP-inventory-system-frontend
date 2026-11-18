@@ -36,7 +36,8 @@ export const MO_STATUS_BADGE: Record<
   CANCELLED: "danger",
 };
 
-export function formatMrpInstant(iso: string): string {
+export function formatMrpInstant(iso: string | null | undefined): string {
+  if (!iso) return "—";
   return new Date(iso).toLocaleString("es-PE", {
     day: "2-digit",
     month: "2-digit",

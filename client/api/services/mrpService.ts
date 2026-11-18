@@ -1,4 +1,4 @@
-import axios from "axios";
+import { http } from "../http";
 import { cloneBoms, cloneManufacturingOrders } from "../../data/mrpFixtures";
 import type {
   BomListQuery,
@@ -10,7 +10,6 @@ import type {
 } from "../../types/inventory/mrp";
 
 const MOCK_LATENCY_MS = 180;
-const MRP_PATH = "/mrp";
 const DEMO_ACTOR = "demo.ops";
 
 let mockBoms: BomResponse[] = cloneBoms();
@@ -40,12 +39,94 @@ function delay(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-function mrpUrl(path = ""): string {
-  const base = inventoryBaseUrl();
-  if (!base) {
-    throw new Error("VITE_INVENTORY_API_URL no configurada para MRP API.");
-  }
-  return `${base}${MRP_PATH}${path}`;
+type BomWire = {
+  id: number;
+  code: string;
+  productId: number;
+  outputQuantity: number;
+  status: "DRAFT" | "ACTIVE" | "ARCHIVED";
+  notes?: string | null;
+  lines?: Array<{
+    id: number;
+    componentProductId: number;
+    quantityPer: number;
+  }>;
+};
+
+type OrderWire = {
+  id: number;
+  code: string;
+  bomId: number;
+  productId: number;
+  warehouseId: number;
+  quantityToProduce: number;
+  quantityProduced: number;
+  status: ManufacturingOrderResponse["status"];
+  confirmedAt?: string | null;
+  startedAt?: string | null;
+  completedAt?: string | null;
+  components?: Array<{
+    id: number;
+    productId: number;
+    plannedQuantity: number;
+    consumedQuantity: number;
+  }>;
+};
+
+function toBom(raw: BomWire): BomResponse {
+  return {
+    id: raw.id,
+    code: raw.code,
+    name: raw.notes?.trim() || raw.code,
+    productId: raw.productId,
+    productSku: "",
+    productName: "",
+    productQty: raw.outputQuantity,
+    uom: "",
+    status: raw.status === "ARCHIVED" ? "RETIRED" : "ACTIVE",
+    components: (raw.lines ?? []).map((line) => ({
+      id: line.id,
+      productId: line.componentProductId,
+      productSku: "",
+      productName: "",
+      qtyPerUnit: line.quantityPer,
+      uom: "",
+    })),
+    deletedAt: null,
+    deletedBy: null,
+    updatedAt: "",
+  };
+}
+
+function toOrder(raw: OrderWire): ManufacturingOrderResponse {
+  return {
+    id: raw.id,
+    name: raw.code,
+    bomId: raw.bomId,
+    bomCode: "",
+    productId: raw.productId,
+    productSku: "",
+    productName: "",
+    qtyToProduce: raw.quantityToProduce,
+    qtyProduced: raw.quantityProduced,
+    uom: "",
+    status: raw.status,
+    warehouseCode: String(raw.warehouseId),
+    scheduledAt: raw.confirmedAt || raw.startedAt || raw.completedAt || "",
+    startedAt: raw.startedAt ?? null,
+    finishedAt: raw.completedAt ?? null,
+    components: (raw.components ?? []).map((line) => ({
+      id: line.id,
+      productId: line.productId,
+      productSku: "",
+      productName: "",
+      theoreticalQty: line.plannedQuantity,
+      consumedQty: line.consumedQuantity,
+      scrapQty: 0,
+      uom: "",
+    })),
+    scraps: [],
+  };
 }
 
 function matchesText(haystack: string, search?: string): boolean {
@@ -131,7 +212,7 @@ export const MrpService = {
 
   async getHubSummary(): Promise<MrpHubSummary> {
     if (!useMrpMock()) {
-      const { data } = await axios.get<MrpHubSummary>(mrpUrl("/summary"));
+      const { data } = await http.get<MrpHubSummary>("/mrp/summary");
       return data;
     }
     await delay(MOCK_LATENCY_MS);
@@ -140,10 +221,8 @@ export const MrpService = {
 
   async listBoms(query: BomListQuery = {}): Promise<BomResponse[]> {
     if (!useMrpMock()) {
-      const { data } = await axios.get<BomResponse[]>(mrpUrl("/boms"), {
-        params: query,
-      });
-      return data;
+      const { data } = await http.get<BomWire[]>("/mrp/boms");
+      return filterBoms(data.map(toBom), query);
     }
     await delay(MOCK_LATENCY_MS);
     return filterBoms(mockBoms, query);
@@ -151,8 +230,8 @@ export const MrpService = {
 
   async getBom(id: number): Promise<BomResponse> {
     if (!useMrpMock()) {
-      const { data } = await axios.get<BomResponse>(mrpUrl(`/boms/${id}`));
-      return data;
+      const { data } = await http.get<BomWire>(`/mrp/boms/${id}`);
+      return toBom(data);
     }
     await delay(MOCK_LATENCY_MS);
     const found = mockBoms.find((b) => b.id === id);
@@ -162,10 +241,8 @@ export const MrpService = {
 
   async retireBom(id: number): Promise<BomResponse> {
     if (!useMrpMock()) {
-      const { data } = await axios.post<BomResponse>(
-        mrpUrl(`/boms/${id}/retire`),
-      );
-      return data;
+      const { data } = await http.post<BomWire>(`/mrp/boms/${id}/archive`);
+      return toBom(data);
     }
     await delay(MOCK_LATENCY_MS);
     const idx = mockBoms.findIndex((b) => b.id === id);
@@ -188,11 +265,8 @@ export const MrpService = {
 
   async listOrders(query: MoListQuery = {}): Promise<ManufacturingOrderResponse[]> {
     if (!useMrpMock()) {
-      const { data } = await axios.get<ManufacturingOrderResponse[]>(
-        mrpUrl("/orders"),
-        { params: query },
-      );
-      return data;
+      const { data } = await http.get<OrderWire[]>("/mrp/manufacturing-orders");
+      return filterOrders(data.map(toOrder), query);
     }
     await delay(MOCK_LATENCY_MS);
     return filterOrders(mockOrders, query);
@@ -200,10 +274,8 @@ export const MrpService = {
 
   async getOrder(id: number): Promise<ManufacturingOrderResponse> {
     if (!useMrpMock()) {
-      const { data } = await axios.get<ManufacturingOrderResponse>(
-        mrpUrl(`/orders/${id}`),
-      );
-      return data;
+      const { data } = await http.get<OrderWire>(`/mrp/manufacturing-orders/${id}`);
+      return toOrder(data);
     }
     await delay(MOCK_LATENCY_MS);
     const found = mockOrders.find((o) => o.id === id);
@@ -213,10 +285,10 @@ export const MrpService = {
 
   async cancelOrder(id: number): Promise<ManufacturingOrderResponse> {
     if (!useMrpMock()) {
-      const { data } = await axios.post<ManufacturingOrderResponse>(
-        mrpUrl(`/orders/${id}/cancel`),
+      const { data } = await http.post<OrderWire>(
+        `/mrp/manufacturing-orders/${id}/cancel`,
       );
-      return data;
+      return toOrder(data);
     }
     await delay(MOCK_LATENCY_MS);
     const idx = mockOrders.findIndex((o) => o.id === id);
@@ -242,11 +314,11 @@ export const MrpService = {
     request: RecordComponentScrapRequest,
   ): Promise<ManufacturingOrderResponse> {
     if (!useMrpMock()) {
-      const { data } = await axios.post<ManufacturingOrderResponse>(
-        mrpUrl(`/orders/${orderId}/scraps`),
+      const { data } = await http.post<OrderWire>(
+        `/mrp/manufacturing-orders/${orderId}/scraps`,
         request,
       );
-      return data;
+      return toOrder(data);
     }
     await delay(MOCK_LATENCY_MS);
     const idx = mockOrders.findIndex((o) => o.id === orderId);
