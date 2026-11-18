@@ -238,7 +238,7 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({
     try {
       setIsLoading(true);
 
-      await setDefaultProductImage(productId, imageId);
+      await setDefaultProductImage(imageId);
       toast.success("Imagen principal actualizada.");
       await loadImages();
     } catch (error) {
@@ -254,7 +254,7 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({
 
     try {
       setIsLoading(true);
-      await deleteProductImage(productId, imageId);
+      await deleteProductImage(imageId);
       toast.success("Imagen eliminada correctamente.");
       await loadImages();
     } catch (error) {

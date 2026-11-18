@@ -17,6 +17,10 @@ interface ImportMetaEnv {
   readonly VITE_INVENTORY_API_URL?: string;
   /** Base identity API, the auth service `/api`. */
   readonly VITE_IDENTITY_API_URL?: string;
+  /** Cloudinary cloud name for product photos. */
+  readonly VITE_CLOUDINARY_CLOUD_NAME?: string;
+  /** Unsigned upload preset that receives product photos. */
+  readonly VITE_CLOUDINARY_UPLOAD_PRESET?: string;
   /** Force stock ops mock fixtures (`true`) or HTTP (`false` when inventory URL is set) */
   readonly VITE_STOCK_USE_MOCK?: string;
   /** Force Purchases RFQ/OC/receipt mock store (`true`) */
