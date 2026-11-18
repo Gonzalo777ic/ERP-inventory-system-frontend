@@ -12,6 +12,7 @@ import {
   Package,
   ShoppingBag,
   Store,
+  Truck,
   UserCog,
   Users,
   Wallet,
@@ -32,7 +33,8 @@ export type ErpAppId =
   | "proyectos"
   | "pos"
   | "ecommerce"
-  | "reportes";
+  | "reportes"
+  | "despacho";
 
 export type ErpAppDefinition = {
   id: ErpAppId;
@@ -168,6 +170,14 @@ export const ERP_APPS: readonly ErpAppDefinition[] = [
     description: "KPIs e informes del ERP",
     path: "/reports",
     icon: BarChart3,
+    stub: false,
+  },
+  {
+    id: "despacho",
+    name: "Despacho",
+    description: "Bandeja del transportista y cercanía",
+    path: "/dispatch/inbox",
+    icon: Truck,
     stub: false,
   },
 ] as const;

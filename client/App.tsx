@@ -46,6 +46,9 @@ import Collections from "./pages/Collections";
 import Returns from "./pages/Returns";
 import ShippingGuides from "./pages/ShippingGuides";
 import Deliveries from "./pages/Deliveries";
+import CarriersPage from "./pages/dispatch/CarriersPage";
+import CarrierInboxPage from "./pages/dispatch/CarrierInboxPage";
+import NearbyCarriersPage from "./pages/dispatch/NearbyCarriersPage";
 import RealtimeLocation from "./pages/RealtimeLocation";
 import Users from "./pages/Users";
 import Clients from "./pages/Clients";
@@ -253,6 +256,9 @@ const AppContent = () => {
                   element={<RealtimeLocation />}
                 />
                 <Route path="/deliveries" element={<Deliveries />} />
+                <Route path="/dispatch/inbox" element={<CarrierInboxPage />} />
+                <Route path="/dispatch/nearby" element={<NearbyCarriersPage />} />
+                <Route path="/dispatch/carriers" element={<CarriersPage />} />
               </Route>
 
               <Route path="/404" element={<NotFound />} />

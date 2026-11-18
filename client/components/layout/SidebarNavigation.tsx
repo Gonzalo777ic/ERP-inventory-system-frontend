@@ -7,7 +7,7 @@ import {
     Archive, Users, ClipboardList, Tag, CreditCard, RefreshCw, Map, 
     PackageOpen, Scale, Ruler, Percent, Megaphone, Clock, AlertTriangle, 
     Briefcase, Warehouse, Wallet, ClipboardCheck, FileSignature, Activity,
-    LayoutGrid, Contact, GitCompareArrows, FileText, PackageCheck, Factory
+    LayoutGrid, Contact, GitCompareArrows, FileText, PackageCheck, Factory, MapPin
 } from 'lucide-react'; 
 
 const ROLE_CLAIM_KEY = "https://valeerp.local/roles";
@@ -123,6 +123,9 @@ export const SidebarNavigation: React.FC = () => {
                     { to: "/shipping-guides", label: "Guías de Remisión", icon: <Map className="h-4 w-4" /> },
                     ...(!isSupplier ? [
                         { to: "/deliveries", label: "Asignación de Delivery", icon: <PackageOpen className="h-4 w-4" /> },
+                        { to: "/dispatch/inbox", label: "Bandeja del transportista", icon: <Truck className="h-4 w-4" /> },
+                        { to: "/dispatch/nearby", label: "Transportistas cercanos", icon: <MapPin className="h-4 w-4" /> },
+                        { to: "/dispatch/carriers", label: "Transportistas", icon: <Users className="h-4 w-4" /> },
                         { to: "/realtime-location", label: "Ubicación en Tiempo Real", icon: <Map className="h-4 w-4" /> },
                     ] : [])
                 ]}
