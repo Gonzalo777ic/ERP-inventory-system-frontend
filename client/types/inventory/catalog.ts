@@ -54,21 +54,23 @@ export type CatalogProductDetailDto = CatalogProductSummaryDto & {
   variants: CatalogVariantDto[];
 };
 
-/** Wire shape from GET /api/inventory/products (ProductView). */
+/** Wire shape from GET /api/inventory/products (ProductResponse). */
 export type InventoryProductViewDto = {
   id: number;
   sku: string;
   name: string;
+  productType?: string;
   brandId: number;
-  price: number;
-  minStockThreshold: number;
+  price?: number;
+  listPrice?: { amount?: number | string | null; currency?: string | null } | null;
+  minStockThreshold?: number;
   categoryId: number;
   unitOfMeasureId: number;
-  imageUrl: string | null;
-  brandName: string | null;
-  categoryName: string | null;
-  unitOfMeasureName: string | null;
-  supplierName: string | null;
+  imageUrl?: string | null;
+  brandName?: string | null;
+  categoryName?: string | null;
+  unitOfMeasureName?: string | null;
+  supplierName?: string | null;
 };
 
 export type CatalogListFilters = {

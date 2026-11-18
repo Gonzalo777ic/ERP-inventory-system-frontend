@@ -164,9 +164,16 @@ export default function CatalogPage() {
                           {PRODUCT_TYPE_LABELS[product.productType]}
                         </Badge>
                       </TableCell>
-                      <TableCell>{product.brandName}</TableCell>
+                      <TableCell>
+                        {brands.find((brand) => brand.id === product.brandId)?.name ||
+                          product.brandName ||
+                          "—"}
+                      </TableCell>
                       <TableCell className="text-muted-foreground">
-                        {product.categoryName}
+                        {categories.find((category) => category.id === product.categoryId)
+                          ?.name ||
+                          product.categoryName ||
+                          "—"}
                       </TableCell>
                       <TableCell className="text-center">
                         {product.variantCount > 0 ? (
@@ -178,10 +185,12 @@ export default function CatalogPage() {
                         )}
                       </TableCell>
                       <TableCell className="text-right font-bold">
-                        {formatCurrency(
-                          product.listPrice.amount,
-                          product.listPrice.currency || CATALOG_CURRENCY,
-                        )}
+                        {Number.isFinite(product.listPrice.amount)
+                          ? formatCurrency(
+                              product.listPrice.amount,
+                              product.listPrice.currency || CATALOG_CURRENCY,
+                            )
+                          : "—"}
                       </TableCell>
                       <TableCell>
                         <div className="flex items-center justify-center gap-1">

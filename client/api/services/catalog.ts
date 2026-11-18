@@ -11,8 +11,10 @@ import {
   CATALOG_CURRENCY,
   type CatalogFilterOption,
   type CatalogListFilters,
+  type CatalogMoneyDto,
   type CatalogProductDetailDto,
   type CatalogProductSummaryDto,
+  type CatalogProductType,
   type InventoryProductViewDto,
 } from "../../types/inventory/catalog";
 
@@ -32,6 +34,28 @@ export function catalogUseMock(): boolean {
   return true;
 }
 
+const PRODUCT_TYPES: readonly CatalogProductType[] = [
+  "STORABLE",
+  "CONSUMABLE",
+  "SERVICE",
+];
+
+function productTypeOf(value: string | undefined): CatalogProductType {
+  if (value && PRODUCT_TYPES.includes(value as CatalogProductType)) {
+    return value as CatalogProductType;
+  }
+  return "STORABLE";
+}
+
+function listPriceOf(view: InventoryProductViewDto): CatalogMoneyDto {
+  const raw = view.listPrice?.amount ?? view.price;
+  const amount = raw == null || raw === "" ? Number.NaN : Number(raw);
+  return {
+    amount,
+    currency: CATALOG_CURRENCY,
+  };
+}
+
 function mapInventoryView(
   view: InventoryProductViewDto,
 ): CatalogProductSummaryDto {
@@ -39,15 +63,15 @@ function mapInventoryView(
     id: view.id,
     sku: view.sku,
     name: view.name,
-    productType: "STORABLE",
+    productType: productTypeOf(view.productType),
     brandId: view.brandId,
-    brandName: view.brandName ?? "—",
+    brandName: view.brandName ?? "",
     categoryId: view.categoryId,
-    categoryName: view.categoryName ?? "—",
+    categoryName: view.categoryName ?? "",
     unitOfMeasureId: view.unitOfMeasureId,
-    unitOfMeasureName: view.unitOfMeasureName ?? "—",
-    listPrice: { amount: Number(view.price), currency: CATALOG_CURRENCY },
-    imageUrl: view.imageUrl,
+    unitOfMeasureName: view.unitOfMeasureName ?? "",
+    listPrice: listPriceOf(view),
+    imageUrl: view.imageUrl ?? null,
     variantCount: 0,
     deletedAt: null,
   };

@@ -87,7 +87,7 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({ isOpen, onClose
                                 <DetailItem 
                                     icon={<DollarSign className="w-5 h-5" />} 
                                     label="Precio Base" 
-                                    value={`$${product.price.toFixed(2)}`} 
+                                    value={Number.isFinite(product.price) ? `S/ ${product.price.toFixed(2)}` : "—"} 
                                 />
                                 <DetailItem 
                                     icon={<Loader2 className="w-5 h-5" />} 

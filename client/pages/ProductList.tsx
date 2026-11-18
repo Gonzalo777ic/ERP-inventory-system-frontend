@@ -355,7 +355,7 @@ const ProductList: React.FC = () => {
                     {product.unitOfMeasureName}
                   </TableCell>
                   <TableCell className="text-right font-mono text-gray-900 dark:text-gray-100">
-                    ${product.price.toFixed(2)}
+                    {Number.isFinite(product.price) ? product.price.toFixed(2) : "—"}
                   </TableCell>
                   <TableCell className="text-center">
                     <span
