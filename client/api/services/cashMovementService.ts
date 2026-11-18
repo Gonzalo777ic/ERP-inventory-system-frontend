@@ -1,7 +1,8 @@
+import { storeApiBase } from "../apiBases";
 import { httpStore } from "../httpStore";
 import { CashMovement, CashMovementPayload, CashMovementFilter } from "../../types/store/cash";
 
-const CASH_URL = 'http://localhost:8083/api/store/cash-movements';
+const cashUrl = (suffix = "") => `${storeApiBase()}/store/cash-movements${suffix}`;
 
 export const CashMovementService = {
     
@@ -18,7 +19,7 @@ export const CashMovementService = {
             if (filters.paymentMethodId) params.append('paymentMethodId', filters.paymentMethodId.toString());
         }
 
-        const response = await httpStore.get<CashMovement[]>(`${CASH_URL}`, { params });
+        const response = await httpStore.get<CashMovement[]>(cashUrl(), { params });
         return response.data;
     },
 
@@ -27,7 +28,7 @@ export const CashMovementService = {
      * Útil para el Dashboard de Caja.
      */
     getDailyMovements: async (): Promise<CashMovement[]> => {
-        const response = await httpStore.get<CashMovement[]>(`${CASH_URL}/daily`);
+        const response = await httpStore.get<CashMovement[]>(cashUrl("/daily"));
         return response.data;
     },
 
@@ -35,7 +36,7 @@ export const CashMovementService = {
      * Obtener un movimiento por ID.
      */
     getById: async (id: number): Promise<CashMovement> => {
-        const response = await httpStore.get<CashMovement>(`${CASH_URL}/${id}`);
+        const response = await httpStore.get<CashMovement>(cashUrl(`/${id}`));
         return response.data;
     },
 
@@ -45,7 +46,7 @@ export const CashMovementService = {
      * o INGRESOS NO OPERATIVOS (Aporte de capital).
      */
     create: async (data: CashMovementPayload): Promise<CashMovement> => {
-        const response = await httpStore.post<CashMovement>(CASH_URL, data);
+        const response = await httpStore.post<CashMovement>(cashUrl(), data);
         return response.data;
     },
 
@@ -53,7 +54,7 @@ export const CashMovementService = {
      * Anular un movimiento (Solo si es permitido por reglas de negocio).
      */
     annul: async (id: number, reason: string): Promise<void> => {
-        await httpStore.patch(`${CASH_URL}/${id}/annul`, reason, {
+        await httpStore.patch(cashUrl(`/${id}/annul`), reason, {
             headers: { 'Content-Type': 'text/plain' }
         });
     }

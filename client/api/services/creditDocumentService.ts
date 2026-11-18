@@ -1,7 +1,8 @@
+import { storeApiBase } from "../apiBases";
 import { httpStore } from "../httpStore";
 import { CreditDocument, CreditDocumentPayload, CreditDocumentStatus } from "../../types/store";
 
-const BASE_URL = 'http://localhost:8083/api/store/credit-documents';
+const creditDocumentsUrl = (suffix = "") => `${storeApiBase()}/store/credit-documents${suffix}`;
 
 export const CreditDocumentService = {
 
@@ -10,31 +11,31 @@ export const CreditDocumentService = {
    */
   getAll: async (): Promise<CreditDocument[]> => {
 
-    const response = await httpStore.get<CreditDocument[]>(BASE_URL);
+    const response = await httpStore.get<CreditDocument[]>(creditDocumentsUrl());
     return response.data;
   },
 
   getByAccount: async (arId: number): Promise<CreditDocument[]> => {
-    const response = await httpStore.get<CreditDocument[]>(`${BASE_URL}/ar/${arId}`);
+    const response = await httpStore.get<CreditDocument[]>(`${creditDocumentsUrl()}/ar/${arId}`);
     return response.data;
   },
 
   create: async (data: CreditDocumentPayload): Promise<CreditDocument> => {
-    const response = await httpStore.post<CreditDocument>(BASE_URL, data);
+    const response = await httpStore.post<CreditDocument>(creditDocumentsUrl(), data);
     return response.data;
   },
 
   updateStatus: async (id: number, status: string): Promise<CreditDocument> => {
-    const response = await httpStore.patch<CreditDocument>(`${BASE_URL}/${id}/status?status=${status}`);
+    const response = await httpStore.patch<CreditDocument>(`${creditDocumentsUrl()}/${id}/status?status=${status}`);
     return response.data;
   },
 
   delete: async (id: number): Promise<void> => {
-    await httpStore.delete(`${BASE_URL}/${id}`);
+    await httpStore.delete(`${creditDocumentsUrl()}/${id}`);
   },
 
   downloadPdf: async (id: number): Promise<Blob> => {
-    const response = await httpStore.get<Blob>(`${BASE_URL}/${id}/pdf`, {
+    const response = await httpStore.get<Blob>(`${creditDocumentsUrl()}/${id}/pdf`, {
       responseType: 'blob' 
     });
     return response.data;

@@ -145,7 +145,7 @@ export const CatalogService = {
       return getMockBrandOptions();
     }
     const response = await http.get<{ id: number; name: string }[]>(
-      "/inventory/brands",
+      "/masters/brands",
     );
     return response.data.map((b) => ({ id: b.id, name: b.name }));
   },

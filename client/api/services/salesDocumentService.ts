@@ -1,7 +1,8 @@
-import { httpStore } from "../httpStore"; 
+import { storeApiBase } from "../apiBases";
+import { httpStore } from "../httpStore";
 import { SalesDocument, SalesDocumentType } from "../../types/store";
 
-const BASE_URL = 'http://localhost:8083/api/sales-documents';
+const salesDocumentsUrl = (suffix = "") => `${storeApiBase()}/sales-documents${suffix}`;
 
 export const SalesDocumentService = {
 
@@ -10,7 +11,7 @@ export const SalesDocumentService = {
    * Corresponde a: POST /api/sales-documents/issue
    */
   issue: async (saleId: number, type: SalesDocumentType): Promise<SalesDocument> => {
-    const response = await httpStore.post<SalesDocument>(`${BASE_URL}/issue`, null, {
+    const response = await httpStore.post<SalesDocument>(`${salesDocumentsUrl()}/issue`, null, {
       params: {
         saleId: saleId,
         type: type
@@ -25,7 +26,7 @@ export const SalesDocumentService = {
    * IMPORTANTE: responseType: 'blob' para recibir el archivo binario
    */
   downloadPdf: async (documentId: number): Promise<Blob> => {
-    const response = await httpStore.get<Blob>(`${BASE_URL}/${documentId}/pdf`, {
+    const response = await httpStore.get<Blob>(`${salesDocumentsUrl()}/${documentId}/pdf`, {
       responseType: 'blob'
     });
     return response.data;
@@ -35,7 +36,7 @@ export const SalesDocumentService = {
    * Opcional: Buscar documento por ID (si creaste el endpoint findById)
    */
   getById: async (id: number): Promise<SalesDocument> => {
-    const response = await httpStore.get<SalesDocument>(`${BASE_URL}/${id}`);
+    const response = await httpStore.get<SalesDocument>(`${salesDocumentsUrl()}/${id}`);
     return response.data;
   }
 };

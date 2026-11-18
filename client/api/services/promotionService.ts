@@ -1,9 +1,8 @@
+import { storeApiBase } from "../apiBases";
 import { httpStore } from "../httpStore";
 
-const BASE_URL = 'http://localhost:8083/api/store';
-const PROMO_URL = `${BASE_URL}/promotions`;
-
-const TARGET_URL = `${BASE_URL}/promotion-targets`; 
+const promotionsUrl = (suffix = "") => `${storeApiBase()}/store/promotions${suffix}`;
+const promotionTargetsUrl = (suffix = "") => `${storeApiBase()}/store/promotion-targets${suffix}`; 
 
 
 
@@ -35,38 +34,38 @@ export const PromotionService = {
   
   getAll: async (): Promise<Promotion[]> => {
 
-    const response = await httpStore.get<Promotion[]>(PROMO_URL);
+    const response = await httpStore.get<Promotion[]>(promotionsUrl());
     return response.data;
   },
   
   create: async (data: PromotionPayload): Promise<Promotion> => {
 
-    const response = await httpStore.post<Promotion>(PROMO_URL, data);
+    const response = await httpStore.post<Promotion>(promotionsUrl(), data);
     return response.data;
   },
 
   update: async (id: number, data: PromotionPayload): Promise<Promotion> => {
 
-    const response = await httpStore.put<Promotion>(`${PROMO_URL}/${id}`, data);
+    const response = await httpStore.put<Promotion>(`${promotionsUrl()}/${id}`, data);
     return response.data;
   },
   
   delete: async (id: number): Promise<void> => {
 
-    await httpStore.delete(`${PROMO_URL}/${id}`);
+    await httpStore.delete(`${promotionsUrl()}/${id}`);
   },
 
 
   
   getTargetsByPromotion: async (promotionId: number): Promise<PromotionTarget[]> => {
 
-    const response = await httpStore.get<PromotionTarget[]>(`${TARGET_URL}/by-promotion/${promotionId}`);
+    const response = await httpStore.get<PromotionTarget[]>(`${promotionTargetsUrl()}/by-promotion/${promotionId}`);
     return response.data;
   },
 
   bulkUpdateTargets: async (promotionId: number, targets: PromotionTarget[]): Promise<PromotionTarget[]> => {
 
-    const response = await httpStore.post<PromotionTarget[]>(`${TARGET_URL}/bulk-update/${promotionId}`, targets);
+    const response = await httpStore.post<PromotionTarget[]>(`${promotionTargetsUrl()}/bulk-update/${promotionId}`, targets);
     return response.data;
   },
   

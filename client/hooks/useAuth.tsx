@@ -1,5 +1,6 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import { useCallback, useEffect, useRef } from "react";
+import { identityApiBase } from "../api/apiBases";
 import { useAuthStore } from "../store/auth.ts";
 
 interface AuthTokenResult {
@@ -71,11 +72,17 @@ export const useAuth = () => {
         syncAuth(true, userWithClaims);
 
         if (!isSyncedRef.current) {
-          fetch("http://localhost:8080/api/auth/auth0-upsert", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ auth0Id: user?.sub, email: user?.email, roles: result.roles }),
-          }).then(res => { if(res.ok) isSyncedRef.current = true; });
+          try {
+            fetch(`${identityApiBase()}/auth/auth0-upsert`, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ auth0Id: user?.sub, email: user?.email, roles: result.roles }),
+            }).then((res) => {
+              if (res.ok) isSyncedRef.current = true;
+            });
+          } catch (error) {
+            console.error("No se pudo registrar la sesión en identidad.", error);
+          }
         }
       } else {
         syncAuth(true, user);

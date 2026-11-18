@@ -1,9 +1,9 @@
+import { storeApiBase } from "../apiBases";
 import { httpStore } from "../httpStore";
 
 import { SaleDetail, SaleDetailPayload } from "../../types/store";
 
-const BASE_URL = 'http://localhost:8083/api/store';
-const DETAIL_API_BASE_URL = `${BASE_URL}/saledetails`;
+const saleDetailsUrl = (suffix = "") => `${storeApiBase()}/store/saledetails${suffix}`;
 
 export const SaleDetailService = {
 
@@ -12,7 +12,7 @@ export const SaleDetailService = {
      * GET /api/store/saledetails/sale/{saleId}
      */
     getDetailsBySaleId: async (saleId: number): Promise<SaleDetail[]> => {
-        const response = await httpStore.get<SaleDetail[]>(`${DETAIL_API_BASE_URL}/sale/${saleId}`);
+        const response = await httpStore.get<SaleDetail[]>(`${saleDetailsUrl()}/sale/${saleId}`);
         return response.data;
     },
 
@@ -22,7 +22,7 @@ export const SaleDetailService = {
      * Nota: Para ventas nuevas, usar SaleService.createSaleWithDetails
      */
     addDetail: async (detailPayload: SaleDetailPayload): Promise<SaleDetail> => {
-        const response = await httpStore.post<SaleDetail>(DETAIL_API_BASE_URL, detailPayload);
+        const response = await httpStore.post<SaleDetail>(saleDetailsUrl(), detailPayload);
         return response.data;
     },
 
@@ -31,6 +31,6 @@ export const SaleDetailService = {
      * DELETE /api/store/saledetails/{id}
      */
     deleteDetail: async (detailId: number): Promise<void> => {
-        await httpStore.delete(`${DETAIL_API_BASE_URL}/${detailId}`);
+        await httpStore.delete(`${saleDetailsUrl()}/${detailId}`);
     },
 };

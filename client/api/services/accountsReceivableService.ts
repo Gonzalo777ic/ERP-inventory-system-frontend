@@ -1,7 +1,8 @@
+import { storeApiBase } from "../apiBases";
 import { httpStore } from "../httpStore";
 import { AccountsReceivable, Installment } from "../../types/store";
 
-const AR_URL = 'http://localhost:8083/api/store/accounts-receivable';
+const receivablesUrl = (suffix = "") => `${storeApiBase()}/store/accounts-receivable${suffix}`;
 
 export const AccountsReceivableService = {
 
@@ -10,7 +11,7 @@ export const AccountsReceivableService = {
      * Útil para reportes financieros globales.
      */
     getAll: async (): Promise<AccountsReceivable[]> => {
-        const response = await httpStore.get<AccountsReceivable[]>(AR_URL);
+        const response = await httpStore.get<AccountsReceivable[]>(receivablesUrl());
         return response.data;
     },
 
@@ -19,7 +20,7 @@ export const AccountsReceivableService = {
      * Incluye las cuotas (installments) y su estado actual.
      */
     getBySaleId: async (saleId: number): Promise<AccountsReceivable> => {
-        const response = await httpStore.get<AccountsReceivable>(`${AR_URL}/sale/${saleId}`);
+        const response = await httpStore.get<AccountsReceivable>(`${receivablesUrl()}/sale/${saleId}`);
         return response.data;
     },
 
@@ -27,7 +28,7 @@ export const AccountsReceivableService = {
      * Obtener solo las cuotas de una cuenta por cobrar.
      */
     getInstallments: async (arId: number): Promise<Installment[]> => {
-        const response = await httpStore.get<Installment[]>(`${AR_URL}/${arId}/installments`);
+        const response = await httpStore.get<Installment[]>(`${receivablesUrl()}/${arId}/installments`);
         return response.data;
     },
 
@@ -35,7 +36,7 @@ export const AccountsReceivableService = {
      * Obtener una cuenta por cobrar específica por su ID.
      */
     getById: async (id: number): Promise<AccountsReceivable> => {
-        const response = await httpStore.get<AccountsReceivable>(`${AR_URL}/${id}`);
+        const response = await httpStore.get<AccountsReceivable>(`${receivablesUrl()}/${id}`);
         return response.data;
     },
 };

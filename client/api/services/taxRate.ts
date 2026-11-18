@@ -1,7 +1,7 @@
+import { storeApiBase } from "../apiBases";
 import { httpStore } from "../httpStore";
 
-const BASE_URL = 'http://localhost:8083/api/store';
-const TAX_RATE_URL = `${BASE_URL}/tax-rates`;
+const taxRatesUrl = (suffix = "") => `${storeApiBase()}/store/tax-rates${suffix}`;
 
 /**
  * INTERFAZ DE MODELO SINCRONIZADA CON EL BACKEND
@@ -18,25 +18,25 @@ type TaxRatePayload = Omit<TaxRate, 'id'>;
 export const TaxRateService = {
   getAll: async (): Promise<TaxRate[]> => {
 
-    const response = await httpStore.get<TaxRate[]>(TAX_RATE_URL);
+    const response = await httpStore.get<TaxRate[]>(taxRatesUrl());
     return response.data;
   },
 
   create: async (data: TaxRatePayload): Promise<TaxRate> => {
 
-    const response = await httpStore.post<TaxRate>(TAX_RATE_URL, data);
+    const response = await httpStore.post<TaxRate>(taxRatesUrl(), data);
     return response.data;
   },
   
   
   update: async (id: number, data: TaxRatePayload): Promise<TaxRate> => {
 
-    const response = await httpStore.put<TaxRate>(`${TAX_RATE_URL}/${id}`, data);
+    const response = await httpStore.put<TaxRate>(`${taxRatesUrl()}/${id}`, data);
     return response.data;
   },
   
   delete: async (id: number): Promise<void> => {
 
-    await httpStore.delete(`${TAX_RATE_URL}/${id}`);
+    await httpStore.delete(`${taxRatesUrl()}/${id}`);
   }
 };

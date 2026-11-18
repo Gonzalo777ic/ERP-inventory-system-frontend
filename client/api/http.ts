@@ -1,9 +1,8 @@
-import axios, { AxiosRequestHeaders } from "axios";
-
-
+import axios from "axios";
+import { inventoryApiBase } from "./apiBases";
 
 export const http = axios.create({
-  baseURL: 'http://localhost:8082/api',
+  baseURL: inventoryApiBase(),
 });
 
 

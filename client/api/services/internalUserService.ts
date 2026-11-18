@@ -1,8 +1,9 @@
+import { identityApiBase } from "../apiBases";
 import { http } from '../http';
-import { httpAuth } from '../httpAuth'; 
+import { httpAuth } from '../httpAuth';
 
-const AUTH_API_BASE_URL = 'http://localhost:8080/api/auth/users'; 
-const ROLES_API_BASE_URL = 'http://localhost:8080/api/auth/roles'; 
+const usersUrl = (suffix = "") => `${identityApiBase()}/auth/users${suffix}`;
+const rolesUrl = () => `${identityApiBase()}/auth/roles`; 
 
 export interface InternalUser {
     id: number;
@@ -20,7 +21,7 @@ export const InternalUserService = {
      * GET /api/auth/users/internal
      */
     getAll: async (): Promise<InternalUser[]> => {
-        const response = await httpAuth.get<InternalUser[]>(`${AUTH_API_BASE_URL}/internal`);
+        const response = await httpAuth.get<InternalUser[]>(usersUrl("/internal"));
         const links = await http.get<Array<{ userId: number; supplierId: number | null }>>("/procurement/supplier-accounts");
         return response.data.map((user) => ({
             ...user,
@@ -53,7 +54,7 @@ export const InternalUserService = {
      * Obtener la lista de roles disponibles.
      */
     getAvailableRoles: async (): Promise<string[]> => {
-        const response = await httpAuth.get<string[]>(ROLES_API_BASE_URL); 
+        const response = await httpAuth.get<string[]>(rolesUrl()); 
         return response.data.filter((role: string) => role !== 'ROLE_CLIENT'); 
     },
 };

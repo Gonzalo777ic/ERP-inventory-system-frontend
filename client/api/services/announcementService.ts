@@ -1,7 +1,8 @@
+import { storeApiBase } from "../apiBases";
 import { httpStore } from "../httpStore";
 import { Announcement, AnnouncementDTO } from "../../types/store/announcement";
 
-const ANNOUNCEMENTS_URL = 'http://localhost:8083/api/store/announcements';
+const announcementsUrl = (suffix = "") => `${storeApiBase()}/store/announcements${suffix}`;
 
 
 
@@ -11,21 +12,21 @@ export const AnnouncementService = {
      * Obtener todos los anuncios (Vista de Administrador).
      */
     getAll: async (): Promise<Announcement[]> => {
-        const response = await httpStore.get<Announcement[]>(ANNOUNCEMENTS_URL);
+        const response = await httpStore.get<Announcement[]>(announcementsUrl());
         return response.data;
     },
     /**
      * Obtener solo los anuncios activos y vigentes (Para mostrar al usuario final).
      */
     getActive: async (): Promise<Announcement[]> => {
-        const response = await httpStore.get<Announcement[]>(`${ANNOUNCEMENTS_URL}/active`);
+        const response = await httpStore.get<Announcement[]>(`${announcementsUrl()}/active`);
         return response.data;
     },
     /**
      * Obtener un anuncio por ID.
      */
     getById: async (id: number): Promise<Announcement> => {
-        const response = await httpStore.get<Announcement>(`${ANNOUNCEMENTS_URL}/${id}`);
+        const response = await httpStore.get<Announcement>(`${announcementsUrl()}/${id}`);
         return response.data;
     },
 
@@ -33,7 +34,7 @@ export const AnnouncementService = {
      * Crear un nuevo anuncio.
      */
     create: async (data: AnnouncementDTO): Promise<Announcement> => {
-        const response = await httpStore.post<Announcement>(ANNOUNCEMENTS_URL, data);
+        const response = await httpStore.post<Announcement>(announcementsUrl(), data);
         return response.data;
     },
 
@@ -41,7 +42,7 @@ export const AnnouncementService = {
      * Actualizar un anuncio existente.
      */
     update: async (id: number, data: AnnouncementDTO): Promise<Announcement> => {
-        const response = await httpStore.put<Announcement>(`${ANNOUNCEMENTS_URL}/${id}`, data);
+        const response = await httpStore.put<Announcement>(`${announcementsUrl()}/${id}`, data);
         return response.data;
     },
     
@@ -50,7 +51,7 @@ export const AnnouncementService = {
      * Alternar estado Activo/Inactivo rápidamente.
      */
     toggleActive: async (id: number): Promise<Announcement> => {
-        const response = await httpStore.patch<Announcement>(`${ANNOUNCEMENTS_URL}/${id}/toggle`);
+        const response = await httpStore.patch<Announcement>(`${announcementsUrl()}/${id}/toggle`);
         return response.data;
     },
 
@@ -58,7 +59,7 @@ export const AnnouncementService = {
      * Eliminar anuncio.
      */
     delete: async (id: number): Promise<void> => {
-        await httpStore.delete(`${ANNOUNCEMENTS_URL}/${id}`);
+        await httpStore.delete(`${announcementsUrl()}/${id}`);
     }
     
 };

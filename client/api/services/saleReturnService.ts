@@ -1,7 +1,8 @@
+import { storeApiBase } from "../apiBases";
 import { httpStore } from "../httpStore";
 import { SaleReturn, SaleReturnRequestPayload } from "../../types/store";
 
-const BASE_URL = 'http://localhost:8083/api/store/sale-returns';
+const saleReturnsUrl = (suffix = "") => `${storeApiBase()}/store/sale-returns${suffix}`;
 
 export const SaleReturnService = {
 
@@ -10,7 +11,7 @@ export const SaleReturnService = {
      * Valida cantidades y calcula montos, pero no afecta inventario ni caja todavía.
      */
     createDraft: async (payload: SaleReturnRequestPayload): Promise<SaleReturn> => {
-        const response = await httpStore.post<SaleReturn>(BASE_URL, payload);
+        const response = await httpStore.post<SaleReturn>(saleReturnsUrl(), payload);
         return response.data;
     },
 
@@ -19,7 +20,7 @@ export const SaleReturnService = {
      * Genera la Nota de Crédito, mueve el stock e impacta cuentas por cobrar.
      */
     confirm: async (returnId: number): Promise<SaleReturn> => {
-        const response = await httpStore.post<SaleReturn>(`${BASE_URL}/${returnId}/confirm`);
+        const response = await httpStore.post<SaleReturn>(`${saleReturnsUrl()}/${returnId}/confirm`);
         return response.data;
     },
 
@@ -27,13 +28,13 @@ export const SaleReturnService = {
      * Obtiene el historial de devoluciones de una venta específica.
      */
     getBySale: async (saleId: number): Promise<SaleReturn[]> => {
-        const response = await httpStore.get<SaleReturn[]>(`${BASE_URL}/sale/${saleId}`);
+        const response = await httpStore.get<SaleReturn[]>(`${saleReturnsUrl()}/sale/${saleId}`);
         return response.data;
     },
 
 
     getAll: async (): Promise<SaleReturn[]> => {
-        const response = await httpStore.get<SaleReturn[]>(BASE_URL);
+        const response = await httpStore.get<SaleReturn[]>(saleReturnsUrl());
         return response.data;
     },
     
@@ -41,6 +42,6 @@ export const SaleReturnService = {
      * Cancela un borrador (opcional, si implementaste el endpoint DELETE)
      */
     cancelDraft: async (returnId: number): Promise<void> => {
-        await httpStore.delete(`${BASE_URL}/${returnId}`);
+        await httpStore.delete(`${saleReturnsUrl()}/${returnId}`);
     }
 };

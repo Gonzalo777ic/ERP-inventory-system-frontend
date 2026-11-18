@@ -5,16 +5,18 @@ interface ImportMetaEnv {
   readonly VITE_AUTH0_DOMAIN: string;
   readonly VITE_AUTH0_CLIENT_ID: string;
   readonly VITE_AUTH0_AUDIENCE: string;
-  /** Base store API, e.g. http://localhost:8083/api/store — Partners uses `${url}/partners` */
+  /** Commercial API base ending in `/api`. Partners uses `${url}/partners`. */
   readonly VITE_STORE_API_URL?: string;
   /** Force Partners mock fixtures (`true`) or HTTP (`false` when store URL is set) */
   readonly VITE_PARTNERS_USE_MOCK?: string;
   /** Contabilidad mock fixtures (`true`) or HTTP (`false` when store URL is set) */
   readonly VITE_ACCOUNTING_USE_MOCK?: string;
-  /** Optional dedicated accounting API base, e.g. http://localhost:8083/api/accounting */
+  /** Optional accounting API base ending in `/api/accounting`. */
   readonly VITE_ACCOUNTING_API_URL?: string;
-  /** Base inventory API, e.g. http://localhost:8082/api — Stock ops uses `${url}/stock/...` */
+  /** Base inventory API. Stock ops uses `${url}/stock/...`. */
   readonly VITE_INVENTORY_API_URL?: string;
+  /** Base identity API, the auth service `/api`. */
+  readonly VITE_IDENTITY_API_URL?: string;
   /** Force stock ops mock fixtures (`true`) or HTTP (`false` when inventory URL is set) */
   readonly VITE_STOCK_USE_MOCK?: string;
   /** Force Purchases RFQ/OC/receipt mock store (`true`) */
