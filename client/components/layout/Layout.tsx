@@ -36,10 +36,11 @@ function Brand() {
       aria-label="Ir a Aplicaciones"
     >
       <img
-        src="/valeerp-wordmark.png"
-        alt="ValeERP"
-        className="h-10 w-auto rounded-md bg-white px-1.5 py-1"
+        src="/valeerp-mark.png"
+        alt=""
+        className="h-9 w-9 rounded-lg object-cover"
       />
+      <span className="tracking-tight">ValeERP</span>
     </Link>
   );
 }
