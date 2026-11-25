@@ -135,10 +135,10 @@ export const ERP_APPS: readonly ErpAppDefinition[] = [
   {
     id: "rrhh",
     name: "RRHH",
-    description: "Empleados y ausencias",
-    path: "/apps/rrhh",
+    description: "Empleados de la entidad legal",
+    path: "/hr/employees",
     icon: Briefcase,
-    stub: true,
+    stub: false,
   },
   {
     id: "proyectos",

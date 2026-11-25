@@ -85,6 +85,7 @@ import BulkAttributeManagerPage from "./pages/BulkAttributeManagerPage";
 import StockDashboard from "./pages/StockDashboard";
 import StockPickings from "./pages/StockPickings";
 import StockAdjustments from "./pages/StockAdjustments";
+import EmployeesPage from "./pages/hr/EmployeesPage";
 
 const queryClient = new QueryClient();
 
@@ -253,6 +254,7 @@ const AppContent = () => {
                   <Route path="/categories" element={<Categories />} />
                   <Route path="/uom" element={<UOM />} />
                   <Route path="/legal-entities" element={<LegalEntities />} />
+                  <Route path="/hr/employees" element={<EmployeesPage />} />
                   <Route path="/attributes" element={<Attributes />} />
                   <Route path="/taxes" element={<Taxes />} />
                   <Route path="/payment-methods" element={<PaymentMethods />} />

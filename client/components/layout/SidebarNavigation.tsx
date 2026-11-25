@@ -7,7 +7,7 @@ import {
     Archive, Users, ClipboardList, Tag, CreditCard, RefreshCw, Map, 
     PackageOpen, Scale, Ruler, Percent, Megaphone, Clock, AlertTriangle, 
     Briefcase, Warehouse, Wallet, ClipboardCheck, FileSignature, Activity,
-    LayoutGrid, Contact, GitCompareArrows, FileText, PackageCheck, Factory, BookOpen, MapPin
+    LayoutGrid, Contact, GitCompareArrows, FileText, PackageCheck, Factory, BookOpen, MapPin, IdCard
 } from 'lucide-react'; 
 
 const ROLE_CLAIM_KEY = "https://valeerp.local/roles";
@@ -97,6 +97,14 @@ export const SidebarNavigation: React.FC = () => {
                             label: "CxC / CxP",
                             icon: <CreditCard className="h-4 w-4" />,
                         },
+                    ]}
+                </SubMenu>
+            )}
+
+            {isAdmin && (
+                <SubMenu label="Recursos Humanos" icon={<IdCard className="h-5 w-5" />}>
+                    {[
+                        { to: "/hr/employees", label: "Empleados", icon: <Contact className="h-4 w-4" /> },
                     ]}
                 </SubMenu>
             )}

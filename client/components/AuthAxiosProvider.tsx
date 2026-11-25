@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useAuthStore } from '../store/auth';
 import { http } from '../api/http'; 
 import { httpStore } from '../api/httpStore';
+import { httpAuth } from '../api/httpAuth';
 
 /**
  * Componente que intercepta todas las peticiones de Axios y adjunta 
@@ -18,6 +19,7 @@ const AuthAxiosProvider: React.FC<{ children: React.ReactNode }> = ({ children }
 
         http.interceptors.request.clear();
         httpStore.interceptors.request.clear();
+        httpAuth.interceptors.request.clear();
 
         if (isAuthenticated && token) {
             
@@ -38,11 +40,13 @@ const AuthAxiosProvider: React.FC<{ children: React.ReactNode }> = ({ children }
 
             const interceptorIdHttp = http.interceptors.request.use(requestInterceptor, errorInterceptor);
             const interceptorIdHttpStore = httpStore.interceptors.request.use(requestInterceptor, errorInterceptor);
+            const interceptorIdHttpAuth = httpAuth.interceptors.request.use(requestInterceptor, errorInterceptor);
 
 
             return () => {
                 http.interceptors.request.eject(interceptorIdHttp);
                 httpStore.interceptors.request.eject(interceptorIdHttpStore);
+                httpAuth.interceptors.request.eject(interceptorIdHttpAuth);
                 console.log("[AXIOS]  Interceptores removidos.");
             };
         }
