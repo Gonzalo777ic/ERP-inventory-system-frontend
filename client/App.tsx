@@ -86,6 +86,8 @@ import StockDashboard from "./pages/StockDashboard";
 import StockPickings from "./pages/StockPickings";
 import StockAdjustments from "./pages/StockAdjustments";
 import EmployeesPage from "./pages/hr/EmployeesPage";
+import ContractsPage from "./pages/hr/ContractsPage";
+import ContractDetailPage from "./pages/hr/ContractDetailPage";
 
 const queryClient = new QueryClient();
 
@@ -255,6 +257,8 @@ const AppContent = () => {
                   <Route path="/uom" element={<UOM />} />
                   <Route path="/legal-entities" element={<LegalEntities />} />
                   <Route path="/hr/employees" element={<EmployeesPage />} />
+                  <Route path="/hr/contracts" element={<ContractsPage />} />
+                  <Route path="/hr/contracts/:id" element={<ContractDetailPage />} />
                   <Route path="/attributes" element={<Attributes />} />
                   <Route path="/taxes" element={<Taxes />} />
                   <Route path="/payment-methods" element={<PaymentMethods />} />

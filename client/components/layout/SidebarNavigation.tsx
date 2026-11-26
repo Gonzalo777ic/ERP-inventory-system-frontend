@@ -105,6 +105,7 @@ export const SidebarNavigation: React.FC = () => {
                 <SubMenu label="Recursos Humanos" icon={<IdCard className="h-5 w-5" />}>
                     {[
                         { to: "/hr/employees", label: "Empleados", icon: <Contact className="h-4 w-4" /> },
+                        { to: "/hr/contracts", label: "Contratos", icon: <FileSignature className="h-4 w-4" /> },
                     ]}
                 </SubMenu>
             )}
